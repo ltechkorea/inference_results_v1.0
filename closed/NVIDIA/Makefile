@@ -29,7 +29,9 @@ HOST_HOSTNAME_SHORT := $(firstword $(subst ., , $(HOST_HOSTNAME)))
 HOSTNAME_SHORT := $(firstword $(subst ., , $(HOSTNAME)))
 
 USE_CPU ?= 0
-SUBMITTER ?= NVIDIA
+SUBMITTER ?= Ltechkorea
+
+NVIDIA_VISIBLE_DEVICES ?= 0,1,2,3,4,5,6,7
 
 # Conditional Docker flags
 ifndef DOCKER_DETACH
@@ -126,6 +128,10 @@ endif
 ifneq ($(wildcard /home/scratch.mlperf_inference),)
     MLPERF_SCRATCH_PATH ?= /home/scratch.mlperf_inference
 endif
+ifneq ($(wildcard /opt/data//scratch.mlperf_inference),)
+    export MLPERF_SCRATCH_PATH ?= /opt/data/scratch.mlperf_inference
+		export DATASET_DIR ?= /opt/data/Dataset
+endif
 # Please run `export MLPERF_CPU_SCRATCH_PATH=<path>` to set your scratch space path.
 # The below paths are for internal use only.
 ifneq ($(wildcard /home/scratch.mlperf_inference_triton_cpu_data),)
@@ -148,6 +154,11 @@ endif
 ifdef MLPERF_CPU_SCRATCH_PATH
     ifneq ($(wildcard $(MLPERF_CPU_SCRATCH_PATH)),)
         DOCKER_MOUNTS += -v $(MLPERF_CPU_SCRATCH_PATH):$(MLPERF_CPU_SCRATCH_PATH)
+    endif
+endif
+ifdef DATASET_DIR
+    ifneq ($(wildcard $(DATASET_DIR)),)
+        DOCKER_MOUNTS += -v $(DATASET_DIR):$(DATASET_DIR)
     endif
 endif
 
@@ -360,7 +371,8 @@ endif
 
 ############################## DOWNLOAD_MODEL ##############################
 
-BENCHMARKS = resnet50 ssd-resnet34 ssd-mobilenet bert dlrm rnnt 3d-unet
+#BENCHMARKS = resnet50 ssd-resnet34 ssd-mobilenet bert dlrm rnnt 3d-unet
+BENCHMARKS = 3d-unet resnet50 dlrm
 
 .PHONY: download_model
 download_model: link_dirs
