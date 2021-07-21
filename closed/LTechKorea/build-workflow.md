@@ -77,6 +77,19 @@ or
 make launch_docker DOCKER_COMMAND='make run_harness RUN_ARGS="--benchmarks=[benchmark] --scenarios=Server --config_ver=default --test_mode=AccuracyOnly"'
 ```
 
+## Compliance
+
+```bash
+make launch_docker DOCKER_COMMAND='make run_audit_harness'
+```
+
+## Result Logs and Compliance Logs
+
+```bash
+make launch_docker DOCKER_COMMAND='make update_results'
+make launch_docker DOCKER_COMMAND='make update_compliance'
+```
+
 ---
 
 ## Resnet50
