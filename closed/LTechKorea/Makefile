@@ -185,6 +185,7 @@ ifneq ($(wildcard /usr/bin/nvidia-docker),)
     export DOCKER_API_VERSION=1.40
 else
     DOCKER_RUN_CMD := docker run --gpus=all
+    #DOCKER_RUN_CMD := docker run --gpus "device=7"
 endif
 endif
 
@@ -192,7 +193,7 @@ endif
 ifeq ($(DOCKER_COMMAND),)
 	DOCKER_INTERACTIVE_FLAGS = -it
 else
-	DOCKER_INTERACTIVE_FLAGS =
+	DOCKER_INTERACTIVE_FLAGS = -t
 endif
 
 ALLOWED_MIG_CONFS := OFF 1 2 3 ALL
@@ -301,7 +302,7 @@ endif
 # Small helper to check if nvidia-docker is installed correctly.
 .PHONY: docker_sanity
 docker_sanity:
-	docker pull nvcr.io/nvidia/cuda:11.0.3-runtime-ubuntu18.04
+	docker pull nvcr.io/nvidia/cuda:11.0.3-uuntime-ubuntu18.04
 	$(DOCKER_RUN_CMD) --rm \
 		-e NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES} \
 		nvcr.io/nvidia/cuda:11.0.3-runtime-ubuntu18.04 nvidia-smi
