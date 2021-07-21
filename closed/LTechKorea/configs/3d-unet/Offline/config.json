@@ -17,6 +17,16 @@
         "gpu_offline_expected_qps": 53,
         "workspace_size": 1610612736
     },
+    "V100S-PCIE-32GBx2": {
+        "extends": [
+            "V100S_PCIE_32GBx8"
+        ]
+    },
+    "V100S-PCIE-32GBx4": {
+        "extends": [
+            "V100S_PCIE_32GBx8"
+        ]
+    },
     "V100S-PCIE-32GBx8": {
         "config_ver": {
             "high_accuracy": {},
