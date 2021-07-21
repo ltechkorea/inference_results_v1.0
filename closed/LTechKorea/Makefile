@@ -29,7 +29,7 @@ HOST_HOSTNAME_SHORT := $(firstword $(subst ., , $(HOST_HOSTNAME)))
 HOSTNAME_SHORT := $(firstword $(subst ., , $(HOSTNAME)))
 
 USE_CPU ?= 0
-SUBMITTER ?= Ltechkorea
+SUBMITTER ?= LTechKorea
 
 NVIDIA_VISIBLE_DEVICES ?= 0,1,2,3,4,5,6,7
 
@@ -100,7 +100,7 @@ TRITON_URL = https://github.com/triton-inference-server/server
 TRITON_HASH = mlperf-inference-v1.0
 
 # Set Environment variables to extracted contents
-export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):/usr/local/cuda/lib64:/usr/lib/$(ARCH)-linux-gnu:$(LOADGEN_LIB_DIR)
+export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):/usr/local/cuda/lib64:/usr/lib/$(ARCH)-linux-gnu:$(LOADGEN_LIB_DIR):/usr/local/cuda-11.1/targets/x86_64-linux/lib/
 export LIBRARY_PATH := /usr/local/cuda/lib64:/usr/lib/$(ARCH)-linux-gnu:$(LOADGEN_LIB_DIR):$(LIBRARY_PATH)
 export PATH := /usr/local/cuda/bin:$(PATH)
 export CPATH := /usr/local/cuda/include:/usr/include/$(ARCH)-linux-gnu:/usr/include/$(ARCH)-linux-gnu/cub:$(CPATH)
@@ -365,6 +365,7 @@ ifeq ($(ARCH), x86_64)
 		$(DOCKER_MOUNTS) $(DOCKER_ARGS) \
 		-e MLPERF_SCRATCH_PATH=$(MLPERF_SCRATCH_PATH) \
 		-e HOST_HOSTNAME=$(HOSTNAME) \
+		-e LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) \
 		$(shell if [ $(MIG_CONF) == "ALL" ]; then echo "--gpus all -e NVIDIA_MIG_CONFIG_DEVICES=all"; elif [ $(MIG_CONF) != "OFF" ]; then echo "--gpus '\"device=`bash scripts/mig_get_uuid.sh`\"'"; fi) \
 		mlperf-inference:$(DOCKER_TAG) $(DOCKER_COMMAND)
 endif
@@ -467,7 +468,7 @@ ifeq ($(ARCH), x86_64)
 			-DTRITON_ENABLE_STATS=OFF \
 			-DTRITON_ENABLE_NVTX=OFF \
 			../build \
-		&& make -j server
+		&& make -j16 server
 endif
 
 # Build TensorRT plugins.
@@ -476,33 +477,33 @@ build_plugins:
 	mkdir -p build/plugins/NMSOptPlugin
 	cd build/plugins/NMSOptPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/NMSOptPlugin \
-		&& make -j
+		&& make -j16
 ifeq ($(ARCH), x86_64)
 	mkdir -p build/plugins/DLRMInteractionsPlugin
 	cd build/plugins/DLRMInteractionsPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/DLRMInteractionsPlugin \
-		&& make -j
+		&& make -j16
 	mkdir -p build/plugins/DLRMBottomMLPPlugin
 	cd build/plugins/DLRMBottomMLPPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/DLRMBottomMLPPlugin \
-		&& make -j
+		&& make -j16
 endif
 	mkdir -p build/plugins/RNNTOptPlugin
 	cd build/plugins/RNNTOptPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/RNNTOptPlugin \
-		&& make -j
+		&& make -j16
 	mkdir -p build/plugins/instanceNormalization3DPlugin
 	cd build/plugins/instanceNormalization3DPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/instanceNormalization3DPlugin \
-		&& make -j
+		&& make -j16
 	mkdir -p build/plugins/pixelShuffle3DPlugin
 	cd build/plugins/pixelShuffle3DPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/pixelShuffle3DPlugin \
-		&& make -j
+		&& make -j16
 	mkdir -p build/plugins/conv3D1X1X1K4Plugin
 	cd build/plugins/conv3D1X1X1K4Plugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/conv3D1X1X1K4Plugin \
-		&& make -j
+		&& make -j16
 
 # Build LoadGen.
 .PHONY: build_loadgen
@@ -513,7 +514,7 @@ build_loadgen:
 	fi
 	@cd $(LOADGEN_LIB_DIR) \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) .. \
-		&& make -j
+		&& make -j16
 	@if [ ! -e $(LOADGEN_LIB_DIR)/mlperf_loadgen.cpython-36m-$(ARCH)-linux-gnu.so ]; then \
 		cd $(LOADGEN_INCLUDE_DIR) \
 			&& CFLAGS="-std=c++14 -O3" python3 setup.py bdist_wheel \
@@ -527,7 +528,7 @@ build_harness:
 	@mkdir -p build/harness \
 		&& cd build/harness \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DLOADGEN_INCLUDE_DIR=$(LOADGEN_INCLUDE_DIR) -DLOADGEN_LIB_DIR=$(LOADGEN_LIB_DIR) $(PROJECT_ROOT)/code/harness \
-		&& make -j
+		&& make -j16
 	@echo "Finished building harness."
 
 # Compile scripts
@@ -584,7 +585,7 @@ ifeq ($(ARCH), x86_64)
 			-DTRITON_ENABLE_STATS=ON \
 			-DTRITON_ENABLE_NVTX=OFF \
 			../build \
-		&& make -j server
+		&& make -j16 server
 endif
 
 # Build Triton-CPU harness source codes.
@@ -594,7 +595,7 @@ build_harness_cpu:
 	@mkdir -p build/harness \
 		&& cd build/harness \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DLOADGEN_INCLUDE_DIR=$(LOADGEN_INCLUDE_DIR) -DLOADGEN_LIB_DIR=$(LOADGEN_LIB_DIR) -DUSE_CPU=$(USE_CPU) $(PROJECT_ROOT)/code/harness \
-		&& make -j
+		&& make -j16
 	@echo "Finished building Triton-CPU harness."
 
 ###############################  RUN  ###############################
