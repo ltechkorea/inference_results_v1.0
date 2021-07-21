@@ -31,7 +31,7 @@ triton_version = "Triton 21.02"
 os_version = "Ubuntu 18.04.4"
 driver_version = "Driver 460.32.03"
 a30_driver_version = "Driver 460.46"
-submitter = "NVIDIA"
+submitter = "LTechKorea"
 
 
 class Status:
@@ -71,96 +71,6 @@ Machine = collections.namedtuple("Machine", [
     "system_name_prefix",
 ])
 
-# The DGX-A100-640G
-SJC1_LUNA_02 = Machine(
-    status=Status.AVAILABLE,
-    host_processor_model_name="AMD EPYC 7742",
-    host_processors_per_node=2,
-    host_processor_core_count=64,
-    host_memory_capacity="2 TB",
-    host_storage_capacity="15 TB",
-    host_storage_type="NVMe SSD",
-    accelerator_model_name="NVIDIA A100-SXM-80GB",
-    accelerator_short_name="A100-SXM-80GB",
-    mig_short_name="",
-    accelerator_memory_capacity="80 GB",
-    accelerator_memory_configuration="HBM2e",
-    hw_notes="",
-    system_id_prefix="DGX-A100",
-    system_name_prefix="NVIDIA DGX-A100",
-)
-# The DGX-A100-640G MIG (1GPC)
-SJC1_LUNA_02_MIG_1 = Machine(
-    status=Status.AVAILABLE,
-    host_processor_model_name="AMD EPYC 7742",
-    host_processors_per_node=2,
-    host_processor_core_count=64,
-    host_memory_capacity="2 TB",
-    host_storage_capacity="15 TB",
-    host_storage_type="NVMe SSD",
-    accelerator_model_name="NVIDIA A100-SXM-80GB",
-    accelerator_short_name="A100-SXM-80GB",
-    mig_short_name="1g.10gb",
-    accelerator_memory_capacity="80 GB",
-    accelerator_memory_configuration="HBM2e",
-    hw_notes="",
-    system_id_prefix="DGX-A100",
-    system_name_prefix="NVIDIA DGX-A100",
-)
-# The A100-PCIex8 machine
-IPP1_1469 = Machine(
-    status=Status.AVAILABLE,
-    host_processor_model_name="AMD EPYC 7742",
-    host_processors_per_node=2,
-    host_processor_core_count=64,
-    host_memory_capacity="1 TB",
-    host_storage_capacity="4 TB",
-    host_storage_type="NVMe SSD",
-    accelerator_model_name="NVIDIA A100-PCIe-40GB",
-    accelerator_short_name="A100-PCIe",
-    mig_short_name="",
-    accelerator_memory_capacity="40 GB",
-    accelerator_memory_configuration="HBM2",
-    hw_notes="",
-    system_id_prefix="",
-    system_name_prefix="Gigabyte G482-Z54",
-)
-# The A30x8 machine
-IPP1_1470 = Machine(
-    status=Status.PREVIEW,
-    host_processor_model_name="AMD EPYC 7742",
-    host_processors_per_node=2,
-    host_processor_core_count=64,
-    host_memory_capacity="1 TB",
-    host_storage_capacity="4 TB",
-    host_storage_type="NVMe SSD",
-    accelerator_model_name="NVIDIA A30",
-    accelerator_short_name="A30",
-    mig_short_name="",
-    accelerator_memory_capacity="24 GB",
-    accelerator_memory_configuration="HBM2",
-    hw_notes="",
-    system_id_prefix="",
-    system_name_prefix="Gigabyte G482-Z54",
-)
-# The A30x8 machine (MIG)
-IPP1_1470_MIG_1 = Machine(
-    status=Status.PREVIEW,
-    host_processor_model_name="AMD EPYC 7742",
-    host_processors_per_node=2,
-    host_processor_core_count=64,
-    host_memory_capacity="1 TB",
-    host_storage_capacity="4 TB",
-    host_storage_type="NVMe SSD",
-    accelerator_model_name="NVIDIA A30",
-    accelerator_short_name="A30",
-    mig_short_name="1g.3gb",
-    accelerator_memory_capacity="24 GB",
-    accelerator_memory_configuration="HBM2",
-    hw_notes="",
-    system_id_prefix="",
-    system_name_prefix="Gigabyte G482-Z54",
-)
 # The A10x8 machine
 COMPUTELAB_402 = Machine(
     status=Status.PREVIEW,
@@ -179,63 +89,8 @@ COMPUTELAB_402 = Machine(
     system_id_prefix="",
     system_name_prefix="Supermicro 4029GP-TRT-OTO-28",
 )
-# The DGX Station A100 machine
-COMPUTELAB_RO_PROD_01 = Machine(
-    status=Status.AVAILABLE,
-    host_processor_model_name="AMD EPYC 7742",
-    host_processors_per_node=1,
-    host_processor_core_count=64,
-    host_memory_capacity="512 GB",
-    host_storage_capacity="10 TB",
-    host_storage_type="NVMe SSD",
-    accelerator_model_name="NVIDIA A100-SXM-80GB",
-    accelerator_short_name="A100-SXM-80GB",
-    mig_short_name="",
-    accelerator_memory_capacity="80 GB",
-    accelerator_memory_configuration="HBM2e",
-    hw_notes="",
-    system_id_prefix="DGX-Station-A100",
-    system_name_prefix="NVIDIA DGX Station A100",
-)
-# The AGX Xavier machine
-COMPUTELAB_310 = Machine(
-    status=Status.AVAILABLE,
-    host_processor_model_name="NVIDIA Carmel (ARMv8.2)",
-    host_processors_per_node=1,
-    host_processor_core_count=8,
-    host_memory_capacity="32 GB",
-    host_storage_capacity="32 GB",
-    host_storage_type="eMMC 5.1",
-    accelerator_model_name="NVIDIA AGX Xavier",
-    accelerator_short_name="AGX_Xavier",
-    mig_short_name="",
-    accelerator_memory_capacity="Shared with host",
-    accelerator_memory_configuration="SRAM",
-    hw_notes="GPU and both DLAs are used in resnet50, ssd-mobilenet, and ssd-resnet34, in Offline and MultiStream scenarios",
-    system_id_prefix="",
-    system_name_prefix="NVIDIA Jetson AGX Xavier 32GB",
-)
-# The Xavier NX machine
-COMPUTELAB_501 = Machine(
-    status=Status.AVAILABLE,
-    host_processor_model_name="NVIDIA Carmel (ARMv8.2)",
-    host_processors_per_node=1,
-    host_processor_core_count=6,
-    host_memory_capacity="8 GB",
-    host_storage_capacity="32 GB",
-    host_storage_type="Micro SD Card",
-    accelerator_model_name="NVIDIA Xavier NX",
-    accelerator_short_name="Xavier_NX",
-    mig_short_name="",
-    accelerator_memory_capacity="Shared with host",
-    accelerator_memory_configuration="SRAM",
-    hw_notes="GPU and both DLAs are used in resnet50, ssd-mobilenet, and ssd-resnet34, in Offline and MultiStream scenarios",
-    system_id_prefix="",
-    system_name_prefix="NVIDIA Jetson Xavier NX",
-)
 
 # List of Systems
-
 
 class System():
     def __init__(self, machine, division, system_type, gpu_count=1, mig_count=0, is_triton=False, is_xavier=False, is_maxq=False, additional_config=""):
@@ -370,40 +225,14 @@ class System():
 
 submission_systems = [
     # Datacenter submissions
-    System(IPP1_1469, Division.CLOSED, SystemType.DATACENTER, 8, 0, False, False),  # A100-PCIex8
-    System(IPP1_1469, Division.CLOSED, SystemType.DATACENTER, 8, 0, False, False, True),  # A100-PCIex8-MaxQ
     System(COMPUTELAB_402, Division.CLOSED, SystemType.DATACENTER, 8, 0, False, False),  # A10x8
     System(COMPUTELAB_402, Division.CLOSED, SystemType.DATACENTER, 8, 0, True, False),  # A10x8-Triton
-    System(IPP1_1470, Division.CLOSED, SystemType.DATACENTER, 8, 0, False, False),  # A30x8
-    System(IPP1_1470, Division.CLOSED, SystemType.DATACENTER, 8, 0, True, False),  # A30x8-Triton
-    System(SJC1_LUNA_02, Division.CLOSED, SystemType.DATACENTER, 8, 0, False, False),  # A100-SXM-80GBx8
-    System(SJC1_LUNA_02, Division.CLOSED, SystemType.DATACENTER, 8, 0, True, False),  # A100-SXM-80GBx8-Triton
-    System(SJC1_LUNA_02, Division.CLOSED, SystemType.DATACENTER, 8, 0, False, False, True),  # A100-SXM-80GBx8-MaxQ
-    System(SJC1_LUNA_02_MIG_1, Division.CLOSED, SystemType.DATACENTER, 8, 7, True, False),  # A100-SXM-80GB-MIG-56x1g.10gb-Triton
-    System(COMPUTELAB_RO_PROD_01, Division.CLOSED, SystemType.DATACENTER, 4, 0, False, False, False),  # A100-SXM-80GBx4
-    System(COMPUTELAB_RO_PROD_01, Division.CLOSED, SystemType.DATACENTER, 4, 0, False, False, True),  # A100-SXM-80GBx4-MaxQ
-    # Datacenter and Edge submissions
-    System(IPP1_1469, Division.CLOSED, SystemType.EDGE, 1, 0, False, False),  # A100-PCIex1
-    System(IPP1_1469, Division.CLOSED, SystemType.EDGE, 1, 0, True, False),  # A100-PCIex1-Triton
-    System(SJC1_LUNA_02, Division.CLOSED, SystemType.BOTH, 1, 0, False, False),  # A100-SXM-80GBx1
-    System(SJC1_LUNA_02, Division.CLOSED, SystemType.BOTH, 1, 0, True, False),  # A100-SXM-80GBx1-Triton
     # Edge submissions
     System(COMPUTELAB_402, Division.CLOSED, SystemType.EDGE, 1, 0, False, False),  # A10x1
     System(COMPUTELAB_402, Division.CLOSED, SystemType.EDGE, 1, 0, True, False),  # A10x1-Triton
-    System(IPP1_1470, Division.CLOSED, SystemType.EDGE, 1, 0, False, False),  # A30x1
-    System(IPP1_1470, Division.CLOSED, SystemType.EDGE, 1, 0, True, False),  # A30x1-Triton
-    System(COMPUTELAB_310, Division.CLOSED, SystemType.EDGE, 1, 0, False, True),  # AGX Xavier
-    System(COMPUTELAB_310, Division.CLOSED, SystemType.EDGE, 1, 0, False, True, True),  # AGX Xavier MaxQ
-    System(SJC1_LUNA_02_MIG_1, Division.CLOSED, SystemType.EDGE, 1, 1, False, False),  # A100-SXM-80GB-MIG-1x1g.10gb
-    System(SJC1_LUNA_02_MIG_1, Division.CLOSED, SystemType.EDGE, 1, 1, True, False),  # A100-SXM-80GB-MIG-1x1g.10gb-Triton
-    System(SJC1_LUNA_02_MIG_1, Division.CLOSED, SystemType.DATACENTER, 1, 1, False, False, False, "HeteroMultiUse"),  # A100-SXM-80GB-MIG-1x1g.10gb-HeteroMultiUse
-    System(IPP1_1470_MIG_1, Division.CLOSED, SystemType.EDGE, 1, 1, False, False),  # A30-MIG-1x1g.3gb
-    System(IPP1_1470_MIG_1, Division.CLOSED, SystemType.EDGE, 1, 1, True, False),  # A30-MIG-1x1g.3gb-Triton
-    System(COMPUTELAB_501, Division.CLOSED, SystemType.EDGE, 1, 0, False, True),  # Xavier NX
-    System(COMPUTELAB_501, Division.CLOSED, SystemType.EDGE, 1, 0, False, True, True),  # Xavier NX MaxQ
     # Open submissions
-    System(COMPUTELAB_402, Division.OPEN, SystemType.DATACENTER, 1, 0, False, False),  # A10x1
-    System(COMPUTELAB_402, Division.OPEN, SystemType.DATACENTER, 8, 0, False, False),  # A10x8
+    #System(COMPUTELAB_402, Division.OPEN, SystemType.DATACENTER, 1, 0, False, False),  # A10x1
+    #System(COMPUTELAB_402, Division.OPEN, SystemType.DATACENTER, 8, 0, False, False),  # A10x8
 ]
 
 
