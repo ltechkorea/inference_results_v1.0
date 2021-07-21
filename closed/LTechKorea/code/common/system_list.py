@@ -272,27 +272,6 @@ class KnownSystems:
     ## add Global list of supported systems
     V100S_PCIE_32GB = SystemClass("V100S-PCIE-32GB", ["Tesla V100S-PCIE-32GB"], ["1DF6"], Architecture.Volta, [1, 4, 8])
 
-    A100_PCIe_40GB = SystemClass("A100-PCIe", ["A100-PCIE-40GB"], ["20F1", "20BF"], Architecture.Ampere, [1, 2, 8])
-    A100_SXM4_40GB = SystemClass("A100-SXM4-40GB", ["A100-SXM4-40GB"], ["20B0"], Architecture.Ampere, [1, 8],
-                                 valid_mig_slices=[MIGSlice(1, 5), MIGSlice(2, 10), MIGSlice(3, 20)])
-    A100_SXM_80GB = SystemClass("A100-SXM-80GB", ["A100-SXM-80GB"], ["20B2"], Architecture.Ampere, [1, 4, 8],
-                                valid_mig_slices=[MIGSlice(1, 10), MIGSlice(2, 20), MIGSlice(3, 40)])
-    GeForceRTX_3080 = SystemClass("GeForceRTX3080", ["GeForce RTX 3080"], ["2206"], Architecture.Ampere, [1])
-    GeForceRTX_3090 = SystemClass("GeForceRTX3090", ["GeForce RTX 3090", "Quadro RTX A6000", "RTX A6000"],
-                                  ["2204", "2230"], Architecture.Ampere, [1])
-    A10 = SystemClass("A10", ["A10"], ["2236"], Architecture.Ampere, [1, 8])
-    T4 = SystemClass("T4", ["Tesla T4", "T4 32GB"], ["1EB8", "1EB9"], Architecture.Turing, [1, 8, 20])
-    TitanRTX = SystemClass("TitanRTX", ["TITAN RTX", "Quadro RTX 8000", "Quadro RTX 6000"], ["1E02", "1E30", "1E36"],
-                           Architecture.Turing, [1, 4])
-    AGX_Xavier = SystemClass("AGX_Xavier", ["Jetson-AGX"], [], Architecture.Xavier, [1])
-    Xavier_NX = SystemClass("Xavier_NX", ["Xavier NX"], [], Architecture.Xavier, [1])
-    A30 = SystemClass("A30", ["A30"], ["20B7"], Architecture.Ampere, [1, 8],
-                      valid_mig_slices=[MIGSlice(1, 3), MIGSlice(1, 6), MIGSlice(2, 6), MIGSlice(2, 12)])
-
-    # CPU Systems
-    Triton_CPU_2S_6258R = SystemClass("Triton_CPU_2S_6258R", ["2S_6258R"], [], Architecture.Intel_CPU_x86_64, [1])
-    Triton_CPU_4S_8380H = SystemClass("Triton_CPU_4S_8380H", ["4S_8380H"], [], Architecture.Intel_CPU_x86_64, [1])
-
     @staticmethod
     def get_all_system_classes():
         return [
