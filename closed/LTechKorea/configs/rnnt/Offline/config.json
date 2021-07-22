@@ -1,4 +1,43 @@
 {
+        "V100S-PCIE-32GBx1": {
+        "extends": [
+            "V100S-PCIE-32GBx1"
+        ]
+    },
+        "V100S-PCIE-32GBx1": {
+        "audio_batch_size": 512,
+        "audio_buffer_num_lines": 4096,
+        "dali_batches_issue_ahead": 4,
+        "dali_pipeline_depth": 4,
+        "gpu_batch_size": 2048,
+        "gpu_copy_streams": 1,
+        "gpu_offline_expected_qps": 12000,
+        "num_warmups": 512
+    },
+    "V100S-PCIE-32GBx2": {
+        "audio_batch_size": 512,
+        "audio_buffer_num_lines": 4096,
+        "dali_batches_issue_ahead": 4,
+        "dali_pipeline_depth": 4,
+        "gpu_batch_size": 2048,
+        "gpu_copy_streams": 1,
+        "gpu_offline_expected_qps": 24000,
+        "num_warmups": 512
+    }, 
+
+    "V100S-PCIE-32GBx8": {
+        "config_ver": {
+            "maxq": {
+                "gpu_offline_expected_qps": 80000
+            }
+        },
+        "scales": {
+            "V100S-PCIE-32GB": {
+                "gpu_offline_expected_qps": 8.0
+            }
+        }
+    },
+{
     "A100-PCIe-MIG_1x1g.5gb": {
         "extends": [
             "A100-SXM4-40GB-MIG_1x1g.5gb"
