@@ -84,6 +84,9 @@ def get_harness(config, profile):
         config["inference_server"] = "custom"
     else:
         LWISHarness = import_module("code.common.lwis_harness").LWISHarness
+        print("=============harness.py==============", end='\n')
+        print ("config= ",str(config), "benchmark_name= ", str(benchmark_name), end='\n')
+        print("=====================================", end='\n')
         harness = LWISHarness(config, name=benchmark_name)
 
     # Attempt to run profiler. Note that this is only available internally.

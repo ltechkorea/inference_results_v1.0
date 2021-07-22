@@ -700,4 +700,9 @@ if __name__ == "__main__":
     system = get_system()
     logging.info("Detected System ID: " + system.get_id())
 
+    print("==============main.py================", end='\n')
+    print("system.get_id", str(system.get_id()), end='\n')
+    print("main_args= ",str(main_args), "system= ", str(system), end='\n')
+    print("=====================================", end='\n')       
+    
     main(main_args, system)
