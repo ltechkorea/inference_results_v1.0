@@ -31,7 +31,7 @@ HOSTNAME_SHORT := $(firstword $(subst ., , $(HOSTNAME)))
 USE_CPU ?= 0
 SUBMITTER ?= LTechKorea
 
-NVIDIA_VISIBLE_DEVICES ?= 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES ?= 0,1
 
 # Conditional Docker flags
 ifndef DOCKER_DETACH
@@ -184,8 +184,8 @@ ifneq ($(wildcard /usr/bin/nvidia-docker),)
     # Related issue: https://github.com/kubernetes-sigs/kubespray/issues/6160
     export DOCKER_API_VERSION=1.40
 else
-    DOCKER_RUN_CMD := docker run --gpus=all
-    #DOCKER_RUN_CMD := docker run --gpus "device=7"
+    #DOCKER_RUN_CMD := docker run --gpus=all
+    DOCKER_RUN_CMD := docker run --gpus "device= 0"
 endif
 endif
 

@@ -13,7 +13,7 @@
         "server_target_qps": 770,
         "use_cuda_thread_per_device": true
     },
-    "V100S-PCIE-32GBx2": {
+    "V100S-PCIE-32GBx4": {
         "config_ver": {
             "triton": {
                 "instance_group_count": 4,
@@ -37,16 +37,8 @@
                 "server_target_qps": 5600,
                 "use_triton": true
             }
-        },
-            "V100S_PCIE_32GBx1": {
-            "A100-PCIex1": {
-                "server_target_qps": 8.0
-            }
         }
     },
-
-
-
     "A100-PCIex1": {
         "config_ver": {
             "triton": {
