@@ -1,4 +1,91 @@
 {
+    "V100S-PCIE-32GBx1": {
+        "active_sms": 60,
+        "config_ver": {
+            "high_accuracy": {
+                "precision": "fp16",
+                "server_target_qps": 1215
+            },
+            "high_accuracy_triton": {
+                "precision": "fp16",
+                "server_target_qps": 1185,
+                "use_triton": true
+            },
+            "triton": {
+                "server_target_qps": 2450,
+                "use_triton": true
+            }
+        },
+        "enable_interleaved": false,
+        "gemm_plugin_fairshare_cache_size": 120,
+        "gpu_batch_size": 64,
+        "graphs_max_seqlen": 200,
+        "server_num_issue_query_threads": 1,
+        "server_target_qps": 2600,
+        "soft_drop": 1.0,
+        "use_small_tile_gemm_plugin": true
+    },
+    "V100S-PCIE-32GBx2": {
+        "active_sms": 60,
+        "config_ver": {
+            "high_accuracy": {
+                "precision": "fp16",
+                "server_target_qps": 2430
+            },
+            "high_accuracy_triton": {
+                "precision": "fp16",
+                "server_target_qps": 2370,
+                "use_triton": true
+            },
+            "triton": {
+                "server_target_qps": 4390,
+                "use_triton": true
+            }
+        },
+        "enable_interleaved": false,
+        "gemm_plugin_fairshare_cache_size": 120,
+        "gpu_batch_size": 64,
+        "graphs_max_seqlen": 200,
+        "server_num_issue_query_threads": 2,
+        "server_target_qps": 5160,
+        "soft_drop": 1.0,
+        "use_small_tile_gemm_plugin": true
+    },
+    "V100S-PCIE-32GBx8": {
+        "config_ver": {
+            "high_accuracy": {
+                "server_target_qps": 9600
+            },
+            "high_accuracy_triton": {
+                "server_target_qps": 9500
+            },
+            "maxq": {
+                "server_target_qps": 17500
+            },
+            "maxq_high_accuracy": {
+                "precision": "fp16",
+                "server_target_qps": 7500
+            },
+            "maxq_high_accuracy_triton": {
+                "precision": "fp16",
+                "server_target_qps": 9480,
+                "use_triton": true
+            },
+            "maxq_triton": {
+                "server_target_qps": 17000,
+                "use_triton": true
+            }
+        },
+        "scales": {
+            "V100S-PCIE-32GBx1": {
+                "server_target_qps": 8.0
+            }
+        }
+    },
+
+
+
+
     "A100-PCIex1": {
         "active_sms": 60,
         "config_ver": {
