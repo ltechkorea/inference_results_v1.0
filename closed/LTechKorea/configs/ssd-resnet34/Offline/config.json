@@ -30,8 +30,15 @@
             "maxq_triton": {
                 "use_triton": true
             }
+        },
+        "scales": {
+            "V100S-PCIE-32GBx1": {
+                "gpu_offline_expected_qps": 8.0
+            }
         }
     },
+
+
     "A100-PCIe-MIG_1x1g.5gb": {
         "extends": [
             "A100-SXM4-40GB-MIG_1x1g.5gb"

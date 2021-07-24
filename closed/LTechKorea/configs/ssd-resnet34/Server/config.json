@@ -37,8 +37,15 @@
                 "server_target_qps": 5600,
                 "use_triton": true
             }
+        },
+        "scales": {
+            "V100S-PCIE-32GBx1": {
+                "server_target_qps": 8.0
+            }
         }
     },
+
+
     "A100-PCIex1": {
         "config_ver": {
             "triton": {
