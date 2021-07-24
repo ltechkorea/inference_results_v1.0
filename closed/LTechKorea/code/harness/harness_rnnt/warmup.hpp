@@ -187,8 +187,13 @@ public:
         mCV.wait(l, [this] {return is_done();});
     }
 
+#ifdef __MLPERF_V_1_1
+    static void warmupSamplesComplete(mlperf::QuerySampleResponse* responses,
+                          size_t response_count, const mlperf::ResponseCallback& response_cb = {}) {
+#else   //  __MLPERF_V_1_1
     // Identical interface to mlperf::QuerySamplesComplete
     static void warmupSamplesComplete(mlperf::QuerySampleResponse* responses, size_t response_count) {
+#endif  //  __MLPERF_V_1_1
         // By having this function be static, we can call it as a global function (ie our inference framework doesn't need to be told about any particular object).
         const mlperf::QuerySampleResponse* end = responses + response_count;
         for (mlperf::QuerySampleResponse* response = responses; response < end; response++) {

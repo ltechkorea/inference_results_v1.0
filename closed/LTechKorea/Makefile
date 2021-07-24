@@ -61,11 +61,14 @@ INFERENCE_URL = https://github.com/mlcommons/inference.git
 LOADGEN_INCLUDE_DIR := $(INFERENCE_DIR)/loadgen
 LOADGEN_LIB_DIR := $(LOADGEN_INCLUDE_DIR)/build
 INFERENCE_HASH = 8ab63193d821dfa3adc78054d5831ea76a9ed502
+#INFERENCE_HASH_1_1 = 2b8ec93ab524eeed884d0ee7c9ccd429c91f87f4
+INFERENCE_HASH_1_1 = r1.1
 
 # Set the power-dev directory
 POWER_DEV_DIR = $(BUILD_DIR)/power-dev
 POWER_DEV_URL = https://github.com/mlcommons/power-dev.git
 POWER_DEV_HASH = 4d8e5e9d57e6b15813bd240ae3d17fad185a2fcc
+POWER_DEV_HASH_1_1 = master
 POWER_CLIENT_SCRIPT = $(BUILD_DIR)/power-dev/ptd_client_server/client.py
 POWER_NTP_URL = ib-01.dc4-in.nvidia.com
 ifeq ($(HOST_HOSTNAME_SHORT), computelab-ro-prod-01)
@@ -406,8 +409,8 @@ build: clone_loadgen clone_power_dev clone_triton link_dirs
 	@$(MAKE) -f $(MAKEFILE_NAME) build_harness
 
 # Clone LoadGen repo.
-.PHONY: clone_loadgen
-clone_loadgen:
+.PHONY: clone_loadgen-0
+clone_loadgen-0:
 	@if [ ! -d $(LOADGEN_INCLUDE_DIR) ]; then \
 		echo "Cloning Official MLPerf Inference (For Loadgen Files)" \
 			&& git clone $(INFERENCE_URL) $(INFERENCE_DIR); \
@@ -421,6 +424,22 @@ clone_loadgen:
 		&& git submodule update --init language/bert/DeepLearningExamples \
 		&& git submodule update --init vision/medical_imaging/3d-unet/nnUnet
 
+.PHONY: clone_loadgen
+clone_loadgen:
+	@if [ ! -d $(LOADGEN_INCLUDE_DIR) ]; then \
+		echo "Cloning Official MLPerf Inference (For Loadgen Files)" \
+			&& git clone $(INFERENCE_URL) $(INFERENCE_DIR); \
+	fi
+	@echo "Updating Loadgen" \
+		echo "Checkout v1.1 branch..." \
+		&& cd $(INFERENCE_DIR) \
+		&& git fetch \
+		&& git checkout ${INFERENCE_HASH_1_1} \
+		&& git submodule update --init tools/submission/power-dev \
+		&& git submodule update --init third_party/pybind \
+		&& git submodule update --init language/bert/DeepLearningExamples \
+		&& git submodule update --init vision/medical_imaging/3d-unet-brats19/nnUnet
+
 # Clone power-dev repo.
 .PHONY: clone_power_dev
 clone_power_dev:
@@ -431,7 +450,7 @@ clone_power_dev:
 	@echo "Updating Power-Dev repo" \
 		&& cd $(POWER_DEV_DIR) \
 		&& git fetch \
-		&& git checkout $(POWER_DEV_HASH)
+		&& git checkout $(POWER_DEV_HASH_1_1)
 
 # Build Triton.
 .PHONY: build_triton

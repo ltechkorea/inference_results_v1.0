@@ -255,7 +255,11 @@ public:
             response.id = resp_id;
             response.data = reinterpret_cast<uintptr_t>(str.data());
             response.size = str.size() * sizeof(RETURN_T);
+#ifdef __MLPERF_V_1_1
+            sf(&response, 1, {}); // Send Response
+#else   //  __MLPERF_V_1_1
             sf(&response, 1); // Send Response
+#endif  //  __MLPERF_V_1_1
             mWorkMap.erase(it);
         }
     }
