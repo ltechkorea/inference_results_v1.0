@@ -103,8 +103,11 @@ TRITON_URL = https://github.com/triton-inference-server/server
 TRITON_HASH = mlperf-inference-v1.0
 
 # Set Environment variables to extracted contents
-export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):/usr/local/cuda/lib64:/usr/lib/$(ARCH)-linux-gnu:$(LOADGEN_LIB_DIR):/usr/local/cuda-11.1/targets/x86_64-linux/lib/
-export LIBRARY_PATH := /usr/local/cuda/lib64:/usr/lib/$(ARCH)-linux-gnu:$(LOADGEN_LIB_DIR):$(LIBRARY_PATH)
+#export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):/usr/local/cuda/lib64:/usr/lib/$(ARCH)-linux-gnu:$(LOADGEN_LIB_DIR):/usr/local/cuda-11.2.2/targets/x86_64-linux/lib/
+#export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):/usr/local/cuda/lib64:/usr/lib/$(ARCH)-linux-gnu:$(LOADGEN_LIB_DIR):
+
+export LIBRARY_PATH := /usr/local/lib:/usr/local/cuda/lib64:/usr/lib/$(ARCH)-linux-gnu:$(LOADGEN_LIB_DIR):/usr/local/cuda/targets/$(ARCH)-linux/lib:/usr/local/cuda-11.1/targets/x86_64-linux/lib:$(LIBRARY_PATH)
+export LD_LIBRARY_PATH := $(LIBRARY_PATH):$(LD_LIBRARY_PATH)
 export PATH := /usr/local/cuda/bin:$(PATH)
 export CPATH := /usr/local/cuda/include:/usr/include/$(ARCH)-linux-gnu:/usr/include/$(ARCH)-linux-gnu/cub:$(CPATH)
 export CUDA_PATH := /usr/local/cuda
@@ -213,20 +216,26 @@ ifneq ($(ARCH), aarch64)
 
             # Check driver version and launch the appropriate container. If driver >= 455, use CUDA 11.1, otherwise 11.0
             ifeq ($(shell if [ $(DRIVER_VER_MAJOR) -ge 455 ]; then echo true; else echo false; fi), true)
+                CUDA_VER := 11.2.2
                 CUDA_VER := 11.1
                 # Workaround: Some machines were upgraded to driver 460, but TRT build is listed under r455, so it
                 # will fail to find the URL
+                DRIVER_VER_MAJOR := 460
                 DRIVER_VER_MAJOR := 455
             else
                 $(error MLPerf Inference v1.0 code requires NVIDIA Driver Version >= 455.xx)
             endif # Driver check
         else
             $(warning Assumes system has NVIDIA Driver Version >= 455.xx)
+            CUDA_VER := 11.2.2
             CUDA_VER := 11.1
+            DRIVER_VER_MAJOR := 460
             DRIVER_VER_MAJOR := 455
         endif # SKIP_DRIVER_CHECK check
     else
+        CUDA_VER := 11.2.2
         CUDA_VER := 11.1
+        DRIVER_VER_MAJOR := 460
         DRIVER_VER_MAJOR := 455
     endif # triton cpu check
 
@@ -327,6 +336,7 @@ endif
 		--build-arg DRIVER_VER_MAJOR=$(DRIVER_VER_MAJOR) \
 		--build-arg SM_GENCODE=$(SM_GENCODE) \
 		--build-arg USE_CPU=$(USE_CPU) \
+		--build-arg TORCH_CUDA_ARCH_LIST=${SM_GENCODE} \
 		--network host - < docker/Dockerfile
 ifeq ($(NO_BUILD), 0)
 	DOCKER_BUILDKIT=$(DOCKER_BUILDKIT) docker build -t mlperf-inference:$(DOCKER_TAG)-latest --no-cache --network host \
