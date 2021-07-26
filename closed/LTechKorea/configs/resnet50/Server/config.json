@@ -1,29 +1,25 @@
 {
-    "V100S-PCIE-32GBx8": {
-        "config_ver": {
-            "triton": {
-                "server_target_qps": 24000,
-                "use_graphs": false,
-                "use_triton": true
-            }
-        },
-        "deque_timeout_usec": 2000,
+    "V100S-PCIE-32GBx1": {
         "gpu_batch_size": 64,
-        "gpu_copy_streams": 4,
-        "gpu_inference_streams": 3,
-        "server_target_qps": 26000,
-        "use_cuda_thread_per_device": true,
-        "use_graphs": true
+        "gpu_copy_streams": 2
+    },
+    "V100S-PCIE-32GBx4": {
+        "gpu_batch_size": 64,
+        "gpu_copy_streams": 2
+    },
+    "V100S-PCIE-32GBx8": {
+        "gpu_batch_size": 64,
+        "gpu_copy_streams": 2
     },
     "benchmark": "resnet50",
     "default": {
         "active_sms": 100,
-        "input_dtype": "int16",
-        "input_format": "linear",
+        "input_dtype": "fp32",
+        "input_format": "dchw4",
         "map_path": "data_maps/imagenet/val_map.txt",
-        "precision": "int16",
-        "tensor_path": "${PREPROCESSED_DATA_DIR}/imagenet/ResNet50/int8_linear",
+        "precision": "fp32",
+        "tensor_path": "${PREPROCESSED_DATA_DIR}/imagenet/ResNet50/fp32",
         "use_deque_limit": true
     },
     "scenario": "Server"
-}
+}   

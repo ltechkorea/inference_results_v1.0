@@ -24,7 +24,7 @@ import re
 
 from glob import glob
 
-VERSION = "v1.0"
+VERSION = "v1.1"
 
 import logging
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s %(filename)s:%(lineno)d %(levelname)s] %(message)s")

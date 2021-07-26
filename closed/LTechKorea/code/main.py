@@ -422,7 +422,7 @@ def check_accuracy(log_file, config, is_compliance=False):
         dtype = config["precision"].lower()
         if dtype in dtype_expand_map:
             dtype = dtype_expand_map[dtype]
-        cmd = "python3 build/inference/vision/medical_imaging/3d-unet/accuracy-brats.py --log_file {:} " \
+        cmd = "python3 build/inference/vision/medical_imaging/3d-unet-brats19/accuracy-brats.py --log_file {:} " \
             "--output_dtype {:} --preprocessed_data_dir build/preprocessed_data/brats/brats_reference_preprocessed " \
             "--postprocessed_data_dir {:} " \
             "--label_data_dir build/preprocessed_data/brats/brats_reference_raw/Task043_BraTS2019/labelsTr".format(log_file, dtype, postprocess_dir)
@@ -700,4 +700,9 @@ if __name__ == "__main__":
     system = get_system()
     logging.info("Detected System ID: " + system.get_id())
 
+    print("==============main.py================", end='\n')
+    print("system.get_id", str(system.get_id()), end='\n')
+    print("main_args= ",str(main_args), "system= ", str(system), end='\n')
+    print("=====================================", end='\n')       
+    
     main(main_args, system)

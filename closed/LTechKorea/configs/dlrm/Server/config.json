@@ -1,4 +1,91 @@
 {
+    "V100S-PCIE-32GBx1": {
+        "complete_threads": 1,
+        "config_ver": {
+            "high_accuracy": {},
+            "high_accuracy_triton": {
+                "batch_triton_requests": true,
+                "buffer_manager_thread_count": 8,
+                "max_queue_delay_usec": 10000,
+                "use_triton": true
+            },
+            "triton": {
+                "batch_triton_requests": true,
+                "buffer_manager_thread_count": 8,
+                "max_queue_delay_usec": 10000,
+                "use_triton": true
+            }
+        },
+        "deque_timeout_usec": 1,
+        "enable_interleaved_top_mlp": false,
+        "gemm_plugin_fairshare_cache_size": 18,
+        "gpu_batch_size": 274000,
+        "gpu_num_bundles": 2,
+        "num_staging_batches": 4,
+        "num_staging_threads": 4,
+        "server_target_qps": 180000,
+        "start_from_device": false,
+        "use_jemalloc": true,
+        "use_small_tile_gemm_plugin": true
+    },
+    "V100S-PCIE-32GBx2": {
+        "complete_threads": 1,
+        "config_ver": {
+            "high_accuracy": {},
+            "high_accuracy_triton": {
+                "max_queue_delay_usec": 10000,
+                "server_target_qps": 80000,
+                "use_triton": true
+            },
+            "triton": {
+                "max_queue_delay_usec": 10000,
+                "server_target_qps": 80000,
+                "use_triton": true
+            }
+        },
+        "deque_timeout_usec": 1,
+        "enable_interleaved_top_mlp": false,
+        "gemm_plugin_fairshare_cache_size": 18,
+        "gpu_batch_size": 262100,
+        "gpu_num_bundles": 2,
+        "num_staging_batches": 8,
+        "num_staging_threads": 8,
+        "numa_config": "0:0-63&1:64-127",
+        "server_target_qps": 385000,
+        "start_from_device": false,
+        "use_jemalloc": true,
+        "use_small_tile_gemm_plugin": true
+    },
+    "V100S-PCIE-32GBx8": {
+        "config_ver": {
+            "maxq": {
+                "server_target_qps": 950000
+            },
+            "maxq_high_accuracy": {
+                "server_target_qps": 950000
+            },
+            "maxq_high_accuracy_triton": {
+                "buffer_manager_thread_count": 8,
+                "max_queue_delay_usec": 10000,
+                "use_triton": true
+            },
+            "maxq_triton": {
+                "buffer_manager_thread_count": 8,
+                "max_queue_delay_usec": 10000,
+                "use_triton": true
+            }
+        },
+        "extends": [
+            "V100S-PCIE-32GBx1"
+        ],
+        "gpu_batch_size": 274000,
+        "numa_config": "3:0-15&2:16-31&1:32-47&0:48-63&7:64-79&6:80-95&5:96-111&4:112-127",
+        "server_target_qps": 700000,
+        "use_jemalloc": false
+    },
+
+
+
     "A100-PCIex1": {
         "complete_threads": 1,
         "config_ver": {

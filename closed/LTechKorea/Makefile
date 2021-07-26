@@ -61,11 +61,14 @@ INFERENCE_URL = https://github.com/mlcommons/inference.git
 LOADGEN_INCLUDE_DIR := $(INFERENCE_DIR)/loadgen
 LOADGEN_LIB_DIR := $(LOADGEN_INCLUDE_DIR)/build
 INFERENCE_HASH = 8ab63193d821dfa3adc78054d5831ea76a9ed502
+#INFERENCE_HASH_1_1 = 2b8ec93ab524eeed884d0ee7c9ccd429c91f87f4
+INFERENCE_HASH_1_1 = r1.1
 
 # Set the power-dev directory
 POWER_DEV_DIR = $(BUILD_DIR)/power-dev
 POWER_DEV_URL = https://github.com/mlcommons/power-dev.git
 POWER_DEV_HASH = 4d8e5e9d57e6b15813bd240ae3d17fad185a2fcc
+POWER_DEV_HASH_1_1 = master
 POWER_CLIENT_SCRIPT = $(BUILD_DIR)/power-dev/ptd_client_server/client.py
 POWER_NTP_URL = ib-01.dc4-in.nvidia.com
 ifeq ($(HOST_HOSTNAME_SHORT), computelab-ro-prod-01)
@@ -406,8 +409,8 @@ build: clone_loadgen clone_power_dev clone_triton link_dirs
 	@$(MAKE) -f $(MAKEFILE_NAME) build_harness
 
 # Clone LoadGen repo.
-.PHONY: clone_loadgen
-clone_loadgen:
+.PHONY: clone_loadgen-0
+clone_loadgen-0:
 	@if [ ! -d $(LOADGEN_INCLUDE_DIR) ]; then \
 		echo "Cloning Official MLPerf Inference (For Loadgen Files)" \
 			&& git clone $(INFERENCE_URL) $(INFERENCE_DIR); \
@@ -421,6 +424,22 @@ clone_loadgen:
 		&& git submodule update --init language/bert/DeepLearningExamples \
 		&& git submodule update --init vision/medical_imaging/3d-unet/nnUnet
 
+.PHONY: clone_loadgen
+clone_loadgen:
+	@if [ ! -d $(LOADGEN_INCLUDE_DIR) ]; then \
+		echo "Cloning Official MLPerf Inference (For Loadgen Files)" \
+			&& git clone $(INFERENCE_URL) $(INFERENCE_DIR); \
+	fi
+	@echo "Updating Loadgen" \
+		echo "Checkout v1.1 branch..." \
+		&& cd $(INFERENCE_DIR) \
+		&& git fetch \
+		&& git checkout ${INFERENCE_HASH_1_1} \
+		&& git submodule update --init tools/submission/power-dev \
+		&& git submodule update --init third_party/pybind \
+		&& git submodule update --init language/bert/DeepLearningExamples \
+		&& git submodule update --init vision/medical_imaging/3d-unet-brats19/nnUnet
+
 # Clone power-dev repo.
 .PHONY: clone_power_dev
 clone_power_dev:
@@ -431,7 +450,7 @@ clone_power_dev:
 	@echo "Updating Power-Dev repo" \
 		&& cd $(POWER_DEV_DIR) \
 		&& git fetch \
-		&& git checkout $(POWER_DEV_HASH)
+		&& git checkout $(POWER_DEV_HASH_1_1)
 
 # Build Triton.
 .PHONY: build_triton
@@ -469,7 +488,7 @@ ifeq ($(ARCH), x86_64)
 			-DTRITON_ENABLE_STATS=OFF \
 			-DTRITON_ENABLE_NVTX=OFF \
 			../build \
-		&& make -j16 server
+		&& make -j server
 endif
 
 # Build TensorRT plugins.
@@ -478,33 +497,33 @@ build_plugins:
 	mkdir -p build/plugins/NMSOptPlugin
 	cd build/plugins/NMSOptPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/NMSOptPlugin \
-		&& make -j16
+		&& make -j
 ifeq ($(ARCH), x86_64)
 	mkdir -p build/plugins/DLRMInteractionsPlugin
 	cd build/plugins/DLRMInteractionsPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/DLRMInteractionsPlugin \
-		&& make -j16
+		&& make -j
 	mkdir -p build/plugins/DLRMBottomMLPPlugin
 	cd build/plugins/DLRMBottomMLPPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/DLRMBottomMLPPlugin \
-		&& make -j16
+		&& make -j
 endif
 	mkdir -p build/plugins/RNNTOptPlugin
 	cd build/plugins/RNNTOptPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/RNNTOptPlugin \
-		&& make -j16
+		&& make -j
 	mkdir -p build/plugins/instanceNormalization3DPlugin
 	cd build/plugins/instanceNormalization3DPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/instanceNormalization3DPlugin \
-		&& make -j16
+		&& make -j
 	mkdir -p build/plugins/pixelShuffle3DPlugin
 	cd build/plugins/pixelShuffle3DPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/pixelShuffle3DPlugin \
-		&& make -j16
+		&& make -j
 	mkdir -p build/plugins/conv3D1X1X1K4Plugin
 	cd build/plugins/conv3D1X1X1K4Plugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/conv3D1X1X1K4Plugin \
-		&& make -j16
+		&& make -j
 
 # Build LoadGen.
 .PHONY: build_loadgen
@@ -515,7 +534,7 @@ build_loadgen:
 	fi
 	@cd $(LOADGEN_LIB_DIR) \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) .. \
-		&& make -j16
+		&& make -j
 	@if [ ! -e $(LOADGEN_LIB_DIR)/mlperf_loadgen.cpython-36m-$(ARCH)-linux-gnu.so ]; then \
 		cd $(LOADGEN_INCLUDE_DIR) \
 			&& CFLAGS="-std=c++14 -O3" python3 setup.py bdist_wheel \
@@ -529,7 +548,7 @@ build_harness:
 	@mkdir -p build/harness \
 		&& cd build/harness \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DLOADGEN_INCLUDE_DIR=$(LOADGEN_INCLUDE_DIR) -DLOADGEN_LIB_DIR=$(LOADGEN_LIB_DIR) $(PROJECT_ROOT)/code/harness \
-		&& make -j16
+		&& make -j
 	@echo "Finished building harness."
 
 # Compile scripts
@@ -586,7 +605,7 @@ ifeq ($(ARCH), x86_64)
 			-DTRITON_ENABLE_STATS=ON \
 			-DTRITON_ENABLE_NVTX=OFF \
 			../build \
-		&& make -j16 server
+		&& make -j server
 endif
 
 # Build Triton-CPU harness source codes.
@@ -596,7 +615,7 @@ build_harness_cpu:
 	@mkdir -p build/harness \
 		&& cd build/harness \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DLOADGEN_INCLUDE_DIR=$(LOADGEN_INCLUDE_DIR) -DLOADGEN_LIB_DIR=$(LOADGEN_LIB_DIR) -DUSE_CPU=$(USE_CPU) $(PROJECT_ROOT)/code/harness \
-		&& make -j16
+		&& make -j
 	@echo "Finished building Triton-CPU harness."
 
 ###############################  RUN  ###############################

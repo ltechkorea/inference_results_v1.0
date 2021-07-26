@@ -25,6 +25,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
 
 # Pass the Loadgen include directory from command line
 add_definitions(-DLOADGEN_INCLUDE_DIR=${LOADGEN_INCLUDE_DIR})
+add_definitions(-D __MLPERF_V_1_1)
 
 # Workaround for TRT header warning
 execute_process(COMMAND echo "Warning: setting -Wno-deprecated-declarations to avoid header warnings")
