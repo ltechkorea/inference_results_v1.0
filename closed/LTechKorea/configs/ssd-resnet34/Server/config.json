@@ -10,7 +10,7 @@
         "deque_timeout_usec": 30000,
         "gpu_batch_size": 8,
         "gpu_inference_streams": 2,
-        "server_target_qps": 770,
+        "server_target_qps": 100,
         "use_cuda_thread_per_device": true
     },
     "V100S-PCIE-32GBx4": {
