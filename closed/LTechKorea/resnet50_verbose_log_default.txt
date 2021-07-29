@@ -1,0 +1,1431 @@
+Launching Docker session
+docker run --gpus "device= 0" --rm -t -w /work \
+	-v /home/tanssg/inference_results_v1.0/closed/LTechKorea:/work -v /home/tanssg:/mnt//home/tanssg \
+	--cap-add SYS_ADMIN --cap-add SYS_TIME \
+	-e NVIDIA_VISIBLE_DEVICES=0,1 \
+	--shm-size=32gb \
+	-v /etc/timezone:/etc/timezone:ro -v /etc/localtime:/etc/localtime:ro \
+	--security-opt apparmor=unconfined --security-opt seccomp=unconfined \
+	--name mlperf-inference-tanssg -h mlperf-inference-tanssg --add-host mlperf-inference-tanssg:127.0.0.1 \
+	--user 1002:1002 --net host --device /dev/fuse \
+	-v /opt/data/scratch.mlperf_inference:/opt/data/scratch.mlperf_inference -v /opt/data/Dataset:/opt/data/Dataset  \
+	-e MLPERF_SCRATCH_PATH=/opt/data/scratch.mlperf_inference \
+	-e HOST_HOSTNAME=ltech-gpu10 \
+	-e LD_LIBRARY_PATH=:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu:/home/tanssg/inference_results_v1.0/closed/LTechKorea/build/inference/loadgen/build:/usr/local/cuda-11.1/targets/x86_64-linux/lib/ \
+	 \
+	mlperf-inference:tanssg make run RUN_ARGS="--benchmarks=resnet50 --scenarios=Offline,Server --config_ver=default --fast --verbose"
+make[1]: Entering directory '/work'
+[2021-07-22 16:49:41,679 __init__.py:255 INFO] Running command: CUDA_VISIBILE_ORDER=PCI_BUS_ID nvidia-smi --query-gpu=gpu_name,pci.device_id,uuid --format=csv
+[2021-07-22 16:49:45,677 main.py:701 INFO] Detected System ID: V100S-PCIE-32GBx1
+==============main.py================
+system.get_id V100S-PCIE-32GBx1
+main_args=  {'action': 'generate_engines', 'audit_test': None, 'benchmarks': 'resnet50', 'config_ver': 'default', 'configs': '', 'gpu_only': False, 'no_child_process': False, 'no_gpu': False, 'power': False, 'profile': None, 'scenarios': 'Offline,Server', 'system_name': None} system=  V100S-PCIE-32GBx1
+=====================================
+[2021-07-22 16:49:45,689 main.py:529 INFO] Using config files: configs/resnet50/Offline/config.json,configs/resnet50/Server/config.json
+[2021-07-22 16:49:45,690 __init__.py:341 INFO] Parsing config file configs/resnet50/Offline/config.json ...
+[2021-07-22 16:49:45,690 __init__.py:341 INFO] Parsing config file configs/resnet50/Server/config.json ...
+[2021-07-22 16:49:45,690 main.py:542 INFO] Processing config "V100S-PCIE-32GBx1_resnet50_Offline"
+[2021-07-22 16:49:45,769 main.py:82 INFO] Building engines for resnet50 benchmark in Offline scenario...
+[2021-07-22 16:49:45,770 main.py:102 INFO] Building GPU engine for V100S-PCIE-32GBx1_resnet50_Offline
+[2021-07-22 16:49:48,712 ResNet50.py:38 INFO] Using workspace size: 1,073,741,824
+[2021-07-22 16:49:48,712 builder.py:55 INFO] ========= BenchmarkBuilder Arguments =========
+[2021-07-22 16:49:48,712 builder.py:57 INFO] gpu_inference_streams=1
+[2021-07-22 16:49:48,712 builder.py:57 INFO] input_dtype=int8
+[2021-07-22 16:49:48,712 builder.py:57 INFO] input_format=linear
+[2021-07-22 16:49:48,712 builder.py:57 INFO] map_path=data_maps/imagenet/val_map.txt
+[2021-07-22 16:49:48,712 builder.py:57 INFO] precision=int8
+[2021-07-22 16:49:48,712 builder.py:57 INFO] tensor_path=${PREPROCESSED_DATA_DIR}/imagenet/ResNet50/int8_linear
+[2021-07-22 16:49:48,712 builder.py:57 INFO] use_graphs=False
+[2021-07-22 16:49:48,712 builder.py:57 INFO] gpu_batch_size=64
+[2021-07-22 16:49:48,712 builder.py:57 INFO] gpu_copy_streams=2
+[2021-07-22 16:49:48,712 builder.py:57 INFO] system_id=V100S-PCIE-32GBx1
+[2021-07-22 16:49:48,712 builder.py:57 INFO] scenario=Offline
+[2021-07-22 16:49:48,712 builder.py:57 INFO] benchmark=resnet50
+[2021-07-22 16:49:48,713 builder.py:57 INFO] config_name=V100S-PCIE-32GBx1_resnet50_Offline
+[2021-07-22 16:49:48,713 builder.py:57 INFO] accuracy_level=99%
+[2021-07-22 16:49:48,713 builder.py:57 INFO] optimization_level=plugin-enabled
+[2021-07-22 16:49:48,713 builder.py:57 INFO] inference_server=lwis
+[2021-07-22 16:49:48,713 builder.py:57 INFO] config_ver=default
+[2021-07-22 16:49:48,713 builder.py:57 INFO] system_name=None
+[2021-07-22 16:49:48,713 builder.py:57 INFO] verbose=True
+[2021-07-22 16:49:48,713 builder.py:57 INFO] batch_size=64
+[2021-07-22 16:49:48,713 builder.py:57 INFO] dla_core=None
+[TensorRT] VERBOSE: Registered plugin creator - ::GridAnchor_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::NMS_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::Reorg_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::Region_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::Clip_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::LReLU_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::PriorBox_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::Normalize_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::RPROI_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::BatchedNMS_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::BatchedNMSDynamic_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::FlattenConcat_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::CropAndResize version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::DetectionLayer_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::Proposal version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::ProposalLayer_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::PyramidROIAlign_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::ResizeNearest_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::Split version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::SpecialSlice_TRT version 1
+[TensorRT] VERBOSE: Registered plugin creator - ::InstanceNormalization_TRT version 1
+[2021-07-22 16:50:07,389 __init__.py:255 INFO] Running command: CUDA_VISIBILE_ORDER=PCI_BUS_ID nvidia-smi --query-gpu=gpu_name,pci.device_id,uuid --format=csv
+[2021-07-22 16:50:07,467 rn50_graphsurgeon.py:823 INFO] Calibration cache successfully parsed
+[2021-07-22 16:50:07,602 rn50_graphsurgeon.py:441 INFO] Renaming layers
+[2021-07-22 16:50:07,603 rn50_graphsurgeon.py:452 INFO] Renaming tensors
+[2021-07-22 16:50:07,603 rn50_graphsurgeon.py:721 INFO] Adding Squeeze
+[2021-07-22 16:50:07,603 rn50_graphsurgeon.py:756 INFO] Adding Conv layer, instead of FC
+[2021-07-22 16:50:07,612 rn50_graphsurgeon.py:777 INFO] Adding TopK layer
+[2021-07-22 16:50:07,612 rn50_graphsurgeon.py:794 INFO] Removing obsolete layers
+[2021-07-22 16:50:07,613 rn50_graphsurgeon.py:587 INFO] Fusing ops in br1_br2c path
+[2021-07-22 16:50:07,615 rn50_graphsurgeon.py:643 INFO] Plugin RES2_BR1_BR2C_1 successful
+[2021-07-22 16:50:07,615 rn50_graphsurgeon.py:650 INFO] Fusing ops in br2b_br2c path
+[2021-07-22 16:50:07,617 rn50_graphsurgeon.py:715 INFO] Plugin RES2_BR2B_BR2C_1 successful
+[2021-07-22 16:50:07,618 rn50_graphsurgeon.py:715 INFO] Plugin RES2_BR2B_BR2C_2 successful
+[TensorRT] VERBOSE: Plugin creator already registered - ::GridAnchor_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::NMS_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::Reorg_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::Region_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::Clip_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::LReLU_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::PriorBox_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::Normalize_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::RPROI_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::BatchedNMS_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::BatchedNMSDynamic_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::FlattenConcat_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::CropAndResize version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::DetectionLayer_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::Proposal version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::ProposalLayer_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::PyramidROIAlign_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::ResizeNearest_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::Split version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::SpecialSlice_TRT version 1
+[TensorRT] VERBOSE: Plugin creator already registered - ::InstanceNormalization_TRT version 1
+[TensorRT] VERBOSE: ModelImporter.cpp:202: Adding network input: input_tensor_0 with dtype: float32, dimensions: (-1, 3, 224, 224)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: input_tensor_0 for ONNX tensor: input_tensor_0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d/kernel/read/_212__cf__212:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/batch_normalization/gamma/read/_1__cf__1:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/batch_normalization/beta/read/_0__cf__0:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/batch_normalization/moving_mean/read/_2__cf__2:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/batch_normalization/moving_variance/read/_3__cf__3:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_2/kernel/read/_224__cf__224:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_2/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_3/kernel/read/_235__cf__235:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_3/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_5/kernel/read/_257__cf__257:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_5/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_8/kernel/read/_263__cf__263:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_8/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_12/kernel/read/_216__cf__216:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_12/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_11/kernel/read/_215__cf__215:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_11/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_13/kernel/read/_217__cf__217:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_13/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_14/kernel/read/_218__cf__218:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_14/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_15/kernel/read/_219__cf__219:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_15/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_16/kernel/read/_220__cf__220:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_16/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_17/kernel/read/_221__cf__221:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_17/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_18/kernel/read/_222__cf__222:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_18/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_19/kernel/read/_223__cf__223:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_19/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_20/kernel/read/_225__cf__225:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_20/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_21/kernel/read/_226__cf__226:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_21/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_22/kernel/read/_227__cf__227:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_22/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_23/kernel/read/_228__cf__228:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_23/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_25/kernel/read/_230__cf__230:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_25/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_24/kernel/read/_229__cf__229:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_24/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_26/kernel/read/_231__cf__231:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_26/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_27/kernel/read/_232__cf__232:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_27/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_28/kernel/read/_233__cf__233:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_28/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_29/kernel/read/_234__cf__234:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_29/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_30/kernel/read/_236__cf__236:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_30/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_31/kernel/read/_237__cf__237:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_31/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_32/kernel/read/_238__cf__238:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_32/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_33/kernel/read/_239__cf__239:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_33/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_34/kernel/read/_240__cf__240:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_34/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_35/kernel/read/_241__cf__241:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_35/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_36/kernel/read/_242__cf__242:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_36/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_37/kernel/read/_243__cf__243:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_37/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_38/kernel/read/_244__cf__244:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_38/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_39/kernel/read/_245__cf__245:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_39/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_40/kernel/read/_247__cf__247:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_40/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_41/kernel/read/_248__cf__248:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_41/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_42/kernel/read/_249__cf__249:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_42/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_43/kernel/read/_250__cf__250:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_43/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_44/kernel/read/_251__cf__251:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_44/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_45/kernel/read/_252__cf__252:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_45/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_46/kernel/read/_253__cf__253:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_46/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_47/kernel/read/_254__cf__254:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_47/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_48/kernel/read/_255__cf__255:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_48/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_49/kernel/read/_256__cf__256:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_49/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_50/kernel/read/_258__cf__258:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_50/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_51/kernel/read/_259__cf__259:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_51/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_52/kernel/read/_260__cf__260:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: resnet_model/conv2d_52/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:90: Importing initializer: fc_replaced_weight
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: conv1 [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: input_tensor_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d/kernel/read/_212__cf__212:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: conv1 [Conv] inputs: [input_tensor_0 -> (-1, 3, 224, 224)], [resnet_model/conv2d/kernel/read/_212__cf__212:0 -> (64, 3, 7, 7)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 3, 224, 224)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: conv1 for ONNX node: conv1
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (7, 7), strides: (2, 2), prepadding: (3, 3), postpadding: (3, 3), dilations: (1, 1), numOutputs: 64
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 64, 112, 112)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: conv1_out_0 for ONNX tensor: conv1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: conv1 [Conv] outputs: [conv1_out_0 -> (-1, 64, 112, 112)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: scale_conv1 [BatchNormalization]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: conv1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/batch_normalization/gamma/read/_1__cf__1:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/batch_normalization/beta/read/_0__cf__0:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/batch_normalization/moving_mean/read/_2__cf__2:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/batch_normalization/moving_variance/read/_3__cf__3:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: scale_conv1 [BatchNormalization] inputs: [conv1_out_0 -> (-1, 64, 112, 112)], [resnet_model/batch_normalization/gamma/read/_1__cf__1:0 -> (64)], [resnet_model/batch_normalization/beta/read/_0__cf__0:0 -> (64)], [resnet_model/batch_normalization/moving_mean/read/_2__cf__2:0 -> (64)], [resnet_model/batch_normalization/moving_variance/read/_3__cf__3:0 -> (64)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: scale_conv1 for ONNX node: scale_conv1
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: scale_conv1_out_0 for ONNX tensor: scale_conv1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: scale_conv1 [BatchNormalization] outputs: [scale_conv1_out_0 -> (-1, 64, 112, 112)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: conv1_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: scale_conv1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: conv1_relu [Relu] inputs: [scale_conv1_out_0 -> (-1, 64, 112, 112)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: conv1_relu for ONNX node: conv1_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: conv1_relu_out_0 for ONNX tensor: conv1_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: conv1_relu [Relu] outputs: [conv1_relu_out_0 -> (-1, 64, 112, 112)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: pool1 [MaxPool]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: conv1_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: pool1 [MaxPool] inputs: [conv1_relu_out_0 -> (-1, 64, 112, 112)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: pool1 for ONNX node: pool1
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: pool1_out_0 for ONNX tensor: pool1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: pool1 [MaxPool] outputs: [pool1_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res2a_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: pool1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_2/kernel/read/_224__cf__224:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_2/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res2a_branch2a [Conv] inputs: [pool1_out_0 -> (-1, 64, 56, 56)], [resnet_model/conv2d_2/kernel/read/_224__cf__224:0 -> (64, 64, 1, 1)], [resnet_model/conv2d_2/Conv2D_bn_offset:0 -> (64)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 64, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res2a_branch2a for ONNX node: res2a_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 64
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 64, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2a_branch2a_out_0 for ONNX tensor: res2a_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res2a_branch2a [Conv] outputs: [res2a_branch2a_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res2a_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2a_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res2a_branch2a_relu [Relu] inputs: [res2a_branch2a_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res2a_branch2a_relu for ONNX node: res2a_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2a_branch2a_relu_out_0 for ONNX tensor: res2a_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res2a_branch2a_relu [Relu] outputs: [res2a_branch2a_relu_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res2a_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2a_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_3/kernel/read/_235__cf__235:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_3/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res2a_branch2b [Conv] inputs: [res2a_branch2a_relu_out_0 -> (-1, 64, 56, 56)], [resnet_model/conv2d_3/kernel/read/_235__cf__235:0 -> (64, 64, 3, 3)], [resnet_model/conv2d_3/Conv2D_bn_offset:0 -> (64)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 64, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res2a_branch2b for ONNX node: res2a_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 64
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 64, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2a_branch2b_out_0 for ONNX tensor: res2a_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res2a_branch2b [Conv] outputs: [res2a_branch2b_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res2a_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2a_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res2a_branch2b_relu [Relu] inputs: [res2a_branch2b_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res2a_branch2b_relu for ONNX node: res2a_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2a_branch2b_relu_out_0 for ONNX tensor: res2a_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res2a_branch2b_relu [Relu] outputs: [res2a_branch2b_relu_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: RES2_BR1_BR2C_1 [RnRes2Br1Br2c_TRT]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: pool1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2a_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: RES2_BR1_BR2C_1 [RnRes2Br1Br2c_TRT] inputs: [pool1_out_0 -> (-1, 64, 56, 56)], [res2a_branch2b_relu_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] INFO: ModelImporter.cpp:135: No importer registered for op: RnRes2Br1Br2c_TRT. Attempting to import as plugin.
+[TensorRT] INFO: builtin_op_importers.cpp:3771: Searching for plugin: RnRes2Br1Br2c_TRT, plugin_version: 2, plugin_namespace: 
+[TensorRT] INFO: builtin_op_importers.cpp:3788: Successfully created plugin: RnRes2Br1Br2c_TRT
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: RES2_BR1_BR2C_1 for ONNX node: RES2_BR1_BR2C_1
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2a_relu_out_0 for ONNX tensor: res2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: RES2_BR1_BR2C_1 [RnRes2Br1Br2c_TRT] outputs: [res2a_relu_out_0 -> (-1, 256, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res2b_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_5/kernel/read/_257__cf__257:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_5/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res2b_branch2a [Conv] inputs: [res2a_relu_out_0 -> (-1, 256, 56, 56)], [resnet_model/conv2d_5/kernel/read/_257__cf__257:0 -> (64, 256, 1, 1)], [resnet_model/conv2d_5/Conv2D_bn_offset:0 -> (64)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res2b_branch2a for ONNX node: res2b_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 64
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 64, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2b_branch2a_out_0 for ONNX tensor: res2b_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res2b_branch2a [Conv] outputs: [res2b_branch2a_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res2b_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2b_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res2b_branch2a_relu [Relu] inputs: [res2b_branch2a_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res2b_branch2a_relu for ONNX node: res2b_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2b_branch2a_relu_out_0 for ONNX tensor: res2b_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res2b_branch2a_relu [Relu] outputs: [res2b_branch2a_relu_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: RES2_BR2B_BR2C_1 [RnRes2Br2bBr2c_TRT]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2b_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: RES2_BR2B_BR2C_1 [RnRes2Br2bBr2c_TRT] inputs: [res2a_relu_out_0 -> (-1, 256, 56, 56)], [res2b_branch2a_relu_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] INFO: ModelImporter.cpp:135: No importer registered for op: RnRes2Br2bBr2c_TRT. Attempting to import as plugin.
+[TensorRT] INFO: builtin_op_importers.cpp:3771: Searching for plugin: RnRes2Br2bBr2c_TRT, plugin_version: 2, plugin_namespace: 
+[TensorRT] INFO: builtin_op_importers.cpp:3788: Successfully created plugin: RnRes2Br2bBr2c_TRT
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: RES2_BR2B_BR2C_1 for ONNX node: RES2_BR2B_BR2C_1
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2b_relu_out_0 for ONNX tensor: res2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: RES2_BR2B_BR2C_1 [RnRes2Br2bBr2c_TRT] outputs: [res2b_relu_out_0 -> (-1, 256, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res2c_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_8/kernel/read/_263__cf__263:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_8/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res2c_branch2a [Conv] inputs: [res2b_relu_out_0 -> (-1, 256, 56, 56)], [resnet_model/conv2d_8/kernel/read/_263__cf__263:0 -> (64, 256, 1, 1)], [resnet_model/conv2d_8/Conv2D_bn_offset:0 -> (64)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res2c_branch2a for ONNX node: res2c_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 64
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 64, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2c_branch2a_out_0 for ONNX tensor: res2c_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res2c_branch2a [Conv] outputs: [res2c_branch2a_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res2c_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2c_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res2c_branch2a_relu [Relu] inputs: [res2c_branch2a_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res2c_branch2a_relu for ONNX node: res2c_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2c_branch2a_relu_out_0 for ONNX tensor: res2c_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res2c_branch2a_relu [Relu] outputs: [res2c_branch2a_relu_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: RES2_BR2B_BR2C_2 [RnRes2Br2bBr2c_TRT]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2c_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: RES2_BR2B_BR2C_2 [RnRes2Br2bBr2c_TRT] inputs: [res2b_relu_out_0 -> (-1, 256, 56, 56)], [res2c_branch2a_relu_out_0 -> (-1, 64, 56, 56)], 
+[TensorRT] INFO: ModelImporter.cpp:135: No importer registered for op: RnRes2Br2bBr2c_TRT. Attempting to import as plugin.
+[TensorRT] INFO: builtin_op_importers.cpp:3771: Searching for plugin: RnRes2Br2bBr2c_TRT, plugin_version: 2, plugin_namespace: 
+[TensorRT] INFO: builtin_op_importers.cpp:3788: Successfully created plugin: RnRes2Br2bBr2c_TRT
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: RES2_BR2B_BR2C_2 for ONNX node: RES2_BR2B_BR2C_2
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res2c_relu_out_0 for ONNX tensor: res2c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: RES2_BR2B_BR2C_2 [RnRes2Br2bBr2c_TRT] outputs: [res2c_relu_out_0 -> (-1, 256, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3a_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_12/kernel/read/_216__cf__216:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_12/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3a_branch2a [Conv] inputs: [res2c_relu_out_0 -> (-1, 256, 56, 56)], [resnet_model/conv2d_12/kernel/read/_216__cf__216:0 -> (128, 256, 1, 1)], [resnet_model/conv2d_12/Conv2D_bn_offset:0 -> (128)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3a_branch2a for ONNX node: res3a_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 128
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 128, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3a_branch2a_out_0 for ONNX tensor: res3a_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3a_branch2a [Conv] outputs: [res3a_branch2a_out_0 -> (-1, 128, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3a_branch1 [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res2c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_11/kernel/read/_215__cf__215:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_11/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3a_branch1 [Conv] inputs: [res2c_relu_out_0 -> (-1, 256, 56, 56)], [resnet_model/conv2d_11/kernel/read/_215__cf__215:0 -> (512, 256, 1, 1)], [resnet_model/conv2d_11/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3a_branch1 for ONNX node: res3a_branch1
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (2, 2), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3a_branch1_out_0 for ONNX tensor: res3a_branch1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3a_branch1 [Conv] outputs: [res3a_branch1_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3a_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3a_branch2a_relu [Relu] inputs: [res3a_branch2a_out_0 -> (-1, 128, 56, 56)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3a_branch2a_relu for ONNX node: res3a_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3a_branch2a_relu_out_0 for ONNX tensor: res3a_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3a_branch2a_relu [Relu] outputs: [res3a_branch2a_relu_out_0 -> (-1, 128, 56, 56)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3a_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_13/kernel/read/_217__cf__217:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_13/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3a_branch2b [Conv] inputs: [res3a_branch2a_relu_out_0 -> (-1, 128, 56, 56)], [resnet_model/conv2d_13/kernel/read/_217__cf__217:0 -> (128, 128, 3, 3)], [resnet_model/conv2d_13/Conv2D_bn_offset:0 -> (128)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 128, 56, 56)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3a_branch2b for ONNX node: res3a_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (2, 2), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 128
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3a_branch2b_out_0 for ONNX tensor: res3a_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3a_branch2b [Conv] outputs: [res3a_branch2b_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3a_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3a_branch2b_relu [Relu] inputs: [res3a_branch2b_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3a_branch2b_relu for ONNX node: res3a_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3a_branch2b_relu_out_0 for ONNX tensor: res3a_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3a_branch2b_relu [Relu] outputs: [res3a_branch2b_relu_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3a_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_14/kernel/read/_218__cf__218:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_14/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3a_branch2c [Conv] inputs: [res3a_branch2b_relu_out_0 -> (-1, 128, 28, 28)], [resnet_model/conv2d_14/kernel/read/_218__cf__218:0 -> (512, 128, 1, 1)], [resnet_model/conv2d_14/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3a_branch2c for ONNX node: res3a_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3a_branch2c_out_0 for ONNX tensor: res3a_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3a_branch2c [Conv] outputs: [res3a_branch2c_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3a [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_branch1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3a [Add] inputs: [res3a_branch2c_out_0 -> (-1, 512, 28, 28)], [res3a_branch1_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3a for ONNX node: res3a
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3a_out_0 for ONNX tensor: res3a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3a [Add] outputs: [res3a_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3a_relu [Relu] inputs: [res3a_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3a_relu for ONNX node: res3a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3a_relu_out_0 for ONNX tensor: res3a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3a_relu [Relu] outputs: [res3a_relu_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3b_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_15/kernel/read/_219__cf__219:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_15/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3b_branch2a [Conv] inputs: [res3a_relu_out_0 -> (-1, 512, 28, 28)], [resnet_model/conv2d_15/kernel/read/_219__cf__219:0 -> (128, 512, 1, 1)], [resnet_model/conv2d_15/Conv2D_bn_offset:0 -> (128)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3b_branch2a for ONNX node: res3b_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 128
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3b_branch2a_out_0 for ONNX tensor: res3b_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3b_branch2a [Conv] outputs: [res3b_branch2a_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3b_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3b_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3b_branch2a_relu [Relu] inputs: [res3b_branch2a_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3b_branch2a_relu for ONNX node: res3b_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3b_branch2a_relu_out_0 for ONNX tensor: res3b_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3b_branch2a_relu [Relu] outputs: [res3b_branch2a_relu_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3b_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3b_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_16/kernel/read/_220__cf__220:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_16/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3b_branch2b [Conv] inputs: [res3b_branch2a_relu_out_0 -> (-1, 128, 28, 28)], [resnet_model/conv2d_16/kernel/read/_220__cf__220:0 -> (128, 128, 3, 3)], [resnet_model/conv2d_16/Conv2D_bn_offset:0 -> (128)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3b_branch2b for ONNX node: res3b_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 128
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3b_branch2b_out_0 for ONNX tensor: res3b_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3b_branch2b [Conv] outputs: [res3b_branch2b_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3b_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3b_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3b_branch2b_relu [Relu] inputs: [res3b_branch2b_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3b_branch2b_relu for ONNX node: res3b_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3b_branch2b_relu_out_0 for ONNX tensor: res3b_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3b_branch2b_relu [Relu] outputs: [res3b_branch2b_relu_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3b_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3b_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_17/kernel/read/_221__cf__221:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_17/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3b_branch2c [Conv] inputs: [res3b_branch2b_relu_out_0 -> (-1, 128, 28, 28)], [resnet_model/conv2d_17/kernel/read/_221__cf__221:0 -> (512, 128, 1, 1)], [resnet_model/conv2d_17/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3b_branch2c for ONNX node: res3b_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3b_branch2c_out_0 for ONNX tensor: res3b_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3b_branch2c [Conv] outputs: [res3b_branch2c_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3b [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3b_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3b [Add] inputs: [res3b_branch2c_out_0 -> (-1, 512, 28, 28)], [res3a_relu_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3b for ONNX node: res3b
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3b_out_0 for ONNX tensor: res3b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3b [Add] outputs: [res3b_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3b_relu [Relu] inputs: [res3b_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3b_relu for ONNX node: res3b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3b_relu_out_0 for ONNX tensor: res3b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3b_relu [Relu] outputs: [res3b_relu_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3c_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_18/kernel/read/_222__cf__222:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_18/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3c_branch2a [Conv] inputs: [res3b_relu_out_0 -> (-1, 512, 28, 28)], [resnet_model/conv2d_18/kernel/read/_222__cf__222:0 -> (128, 512, 1, 1)], [resnet_model/conv2d_18/Conv2D_bn_offset:0 -> (128)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3c_branch2a for ONNX node: res3c_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 128
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3c_branch2a_out_0 for ONNX tensor: res3c_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3c_branch2a [Conv] outputs: [res3c_branch2a_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3c_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3c_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3c_branch2a_relu [Relu] inputs: [res3c_branch2a_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3c_branch2a_relu for ONNX node: res3c_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3c_branch2a_relu_out_0 for ONNX tensor: res3c_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3c_branch2a_relu [Relu] outputs: [res3c_branch2a_relu_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3c_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3c_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_19/kernel/read/_223__cf__223:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_19/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3c_branch2b [Conv] inputs: [res3c_branch2a_relu_out_0 -> (-1, 128, 28, 28)], [resnet_model/conv2d_19/kernel/read/_223__cf__223:0 -> (128, 128, 3, 3)], [resnet_model/conv2d_19/Conv2D_bn_offset:0 -> (128)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3c_branch2b for ONNX node: res3c_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 128
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3c_branch2b_out_0 for ONNX tensor: res3c_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3c_branch2b [Conv] outputs: [res3c_branch2b_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3c_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3c_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3c_branch2b_relu [Relu] inputs: [res3c_branch2b_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3c_branch2b_relu for ONNX node: res3c_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3c_branch2b_relu_out_0 for ONNX tensor: res3c_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3c_branch2b_relu [Relu] outputs: [res3c_branch2b_relu_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3c_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3c_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_20/kernel/read/_225__cf__225:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_20/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3c_branch2c [Conv] inputs: [res3c_branch2b_relu_out_0 -> (-1, 128, 28, 28)], [resnet_model/conv2d_20/kernel/read/_225__cf__225:0 -> (512, 128, 1, 1)], [resnet_model/conv2d_20/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3c_branch2c for ONNX node: res3c_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3c_branch2c_out_0 for ONNX tensor: res3c_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3c_branch2c [Conv] outputs: [res3c_branch2c_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3c [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3c_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3c [Add] inputs: [res3c_branch2c_out_0 -> (-1, 512, 28, 28)], [res3b_relu_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3c for ONNX node: res3c
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3c_out_0 for ONNX tensor: res3c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3c [Add] outputs: [res3c_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3c_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3c_relu [Relu] inputs: [res3c_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3c_relu for ONNX node: res3c_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3c_relu_out_0 for ONNX tensor: res3c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3c_relu [Relu] outputs: [res3c_relu_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3d_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_21/kernel/read/_226__cf__226:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_21/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3d_branch2a [Conv] inputs: [res3c_relu_out_0 -> (-1, 512, 28, 28)], [resnet_model/conv2d_21/kernel/read/_226__cf__226:0 -> (128, 512, 1, 1)], [resnet_model/conv2d_21/Conv2D_bn_offset:0 -> (128)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3d_branch2a for ONNX node: res3d_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 128
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3d_branch2a_out_0 for ONNX tensor: res3d_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3d_branch2a [Conv] outputs: [res3d_branch2a_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3d_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3d_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3d_branch2a_relu [Relu] inputs: [res3d_branch2a_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3d_branch2a_relu for ONNX node: res3d_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3d_branch2a_relu_out_0 for ONNX tensor: res3d_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3d_branch2a_relu [Relu] outputs: [res3d_branch2a_relu_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3d_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3d_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_22/kernel/read/_227__cf__227:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_22/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3d_branch2b [Conv] inputs: [res3d_branch2a_relu_out_0 -> (-1, 128, 28, 28)], [resnet_model/conv2d_22/kernel/read/_227__cf__227:0 -> (128, 128, 3, 3)], [resnet_model/conv2d_22/Conv2D_bn_offset:0 -> (128)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3d_branch2b for ONNX node: res3d_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 128
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3d_branch2b_out_0 for ONNX tensor: res3d_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3d_branch2b [Conv] outputs: [res3d_branch2b_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3d_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3d_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3d_branch2b_relu [Relu] inputs: [res3d_branch2b_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3d_branch2b_relu for ONNX node: res3d_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3d_branch2b_relu_out_0 for ONNX tensor: res3d_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3d_branch2b_relu [Relu] outputs: [res3d_branch2b_relu_out_0 -> (-1, 128, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3d_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3d_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_23/kernel/read/_228__cf__228:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_23/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3d_branch2c [Conv] inputs: [res3d_branch2b_relu_out_0 -> (-1, 128, 28, 28)], [resnet_model/conv2d_23/kernel/read/_228__cf__228:0 -> (512, 128, 1, 1)], [resnet_model/conv2d_23/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 128, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3d_branch2c for ONNX node: res3d_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3d_branch2c_out_0 for ONNX tensor: res3d_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3d_branch2c [Conv] outputs: [res3d_branch2c_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3d [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3d_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3d [Add] inputs: [res3d_branch2c_out_0 -> (-1, 512, 28, 28)], [res3c_relu_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3d for ONNX node: res3d
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3d_out_0 for ONNX tensor: res3d_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3d [Add] outputs: [res3d_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res3d_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3d_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res3d_relu [Relu] inputs: [res3d_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res3d_relu for ONNX node: res3d_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res3d_relu_out_0 for ONNX tensor: res3d_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res3d_relu [Relu] outputs: [res3d_relu_out_0 -> (-1, 512, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4a_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3d_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_25/kernel/read/_230__cf__230:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_25/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4a_branch2a [Conv] inputs: [res3d_relu_out_0 -> (-1, 512, 28, 28)], [resnet_model/conv2d_25/kernel/read/_230__cf__230:0 -> (256, 512, 1, 1)], [resnet_model/conv2d_25/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4a_branch2a for ONNX node: res4a_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4a_branch2a_out_0 for ONNX tensor: res4a_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4a_branch2a [Conv] outputs: [res4a_branch2a_out_0 -> (-1, 256, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4a_branch1 [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res3d_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_24/kernel/read/_229__cf__229:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_24/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4a_branch1 [Conv] inputs: [res3d_relu_out_0 -> (-1, 512, 28, 28)], [resnet_model/conv2d_24/kernel/read/_229__cf__229:0 -> (1024, 512, 1, 1)], [resnet_model/conv2d_24/Conv2D_bn_offset:0 -> (1024)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4a_branch1 for ONNX node: res4a_branch1
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (2, 2), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 1024
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4a_branch1_out_0 for ONNX tensor: res4a_branch1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4a_branch1 [Conv] outputs: [res4a_branch1_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4a_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4a_branch2a_relu [Relu] inputs: [res4a_branch2a_out_0 -> (-1, 256, 28, 28)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4a_branch2a_relu for ONNX node: res4a_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4a_branch2a_relu_out_0 for ONNX tensor: res4a_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4a_branch2a_relu [Relu] outputs: [res4a_branch2a_relu_out_0 -> (-1, 256, 28, 28)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4a_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_26/kernel/read/_231__cf__231:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_26/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4a_branch2b [Conv] inputs: [res4a_branch2a_relu_out_0 -> (-1, 256, 28, 28)], [resnet_model/conv2d_26/kernel/read/_231__cf__231:0 -> (256, 256, 3, 3)], [resnet_model/conv2d_26/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 28, 28)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4a_branch2b for ONNX node: res4a_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (2, 2), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4a_branch2b_out_0 for ONNX tensor: res4a_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4a_branch2b [Conv] outputs: [res4a_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4a_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4a_branch2b_relu [Relu] inputs: [res4a_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4a_branch2b_relu for ONNX node: res4a_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4a_branch2b_relu_out_0 for ONNX tensor: res4a_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4a_branch2b_relu [Relu] outputs: [res4a_branch2b_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4a_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_27/kernel/read/_232__cf__232:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_27/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4a_branch2c [Conv] inputs: [res4a_branch2b_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_27/kernel/read/_232__cf__232:0 -> (1024, 256, 1, 1)], [resnet_model/conv2d_27/Conv2D_bn_offset:0 -> (1024)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4a_branch2c for ONNX node: res4a_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 1024
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4a_branch2c_out_0 for ONNX tensor: res4a_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4a_branch2c [Conv] outputs: [res4a_branch2c_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4a [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_branch1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4a [Add] inputs: [res4a_branch2c_out_0 -> (-1, 1024, 14, 14)], [res4a_branch1_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4a for ONNX node: res4a
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4a_out_0 for ONNX tensor: res4a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4a [Add] outputs: [res4a_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4a_relu [Relu] inputs: [res4a_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4a_relu for ONNX node: res4a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4a_relu_out_0 for ONNX tensor: res4a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4a_relu [Relu] outputs: [res4a_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4b_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_28/kernel/read/_233__cf__233:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_28/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4b_branch2a [Conv] inputs: [res4a_relu_out_0 -> (-1, 1024, 14, 14)], [resnet_model/conv2d_28/kernel/read/_233__cf__233:0 -> (256, 1024, 1, 1)], [resnet_model/conv2d_28/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4b_branch2a for ONNX node: res4b_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4b_branch2a_out_0 for ONNX tensor: res4b_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4b_branch2a [Conv] outputs: [res4b_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4b_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4b_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4b_branch2a_relu [Relu] inputs: [res4b_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4b_branch2a_relu for ONNX node: res4b_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4b_branch2a_relu_out_0 for ONNX tensor: res4b_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4b_branch2a_relu [Relu] outputs: [res4b_branch2a_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4b_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4b_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_29/kernel/read/_234__cf__234:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_29/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4b_branch2b [Conv] inputs: [res4b_branch2a_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_29/kernel/read/_234__cf__234:0 -> (256, 256, 3, 3)], [resnet_model/conv2d_29/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4b_branch2b for ONNX node: res4b_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4b_branch2b_out_0 for ONNX tensor: res4b_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4b_branch2b [Conv] outputs: [res4b_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4b_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4b_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4b_branch2b_relu [Relu] inputs: [res4b_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4b_branch2b_relu for ONNX node: res4b_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4b_branch2b_relu_out_0 for ONNX tensor: res4b_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4b_branch2b_relu [Relu] outputs: [res4b_branch2b_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4b_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4b_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_30/kernel/read/_236__cf__236:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_30/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4b_branch2c [Conv] inputs: [res4b_branch2b_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_30/kernel/read/_236__cf__236:0 -> (1024, 256, 1, 1)], [resnet_model/conv2d_30/Conv2D_bn_offset:0 -> (1024)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4b_branch2c for ONNX node: res4b_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 1024
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4b_branch2c_out_0 for ONNX tensor: res4b_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4b_branch2c [Conv] outputs: [res4b_branch2c_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4b [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4b_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4b [Add] inputs: [res4b_branch2c_out_0 -> (-1, 1024, 14, 14)], [res4a_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4b for ONNX node: res4b
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4b_out_0 for ONNX tensor: res4b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4b [Add] outputs: [res4b_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4b_relu [Relu] inputs: [res4b_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4b_relu for ONNX node: res4b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4b_relu_out_0 for ONNX tensor: res4b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4b_relu [Relu] outputs: [res4b_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4c_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_31/kernel/read/_237__cf__237:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_31/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4c_branch2a [Conv] inputs: [res4b_relu_out_0 -> (-1, 1024, 14, 14)], [resnet_model/conv2d_31/kernel/read/_237__cf__237:0 -> (256, 1024, 1, 1)], [resnet_model/conv2d_31/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4c_branch2a for ONNX node: res4c_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4c_branch2a_out_0 for ONNX tensor: res4c_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4c_branch2a [Conv] outputs: [res4c_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4c_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4c_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4c_branch2a_relu [Relu] inputs: [res4c_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4c_branch2a_relu for ONNX node: res4c_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4c_branch2a_relu_out_0 for ONNX tensor: res4c_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4c_branch2a_relu [Relu] outputs: [res4c_branch2a_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4c_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4c_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_32/kernel/read/_238__cf__238:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_32/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4c_branch2b [Conv] inputs: [res4c_branch2a_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_32/kernel/read/_238__cf__238:0 -> (256, 256, 3, 3)], [resnet_model/conv2d_32/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4c_branch2b for ONNX node: res4c_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4c_branch2b_out_0 for ONNX tensor: res4c_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4c_branch2b [Conv] outputs: [res4c_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4c_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4c_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4c_branch2b_relu [Relu] inputs: [res4c_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4c_branch2b_relu for ONNX node: res4c_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4c_branch2b_relu_out_0 for ONNX tensor: res4c_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4c_branch2b_relu [Relu] outputs: [res4c_branch2b_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4c_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4c_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_33/kernel/read/_239__cf__239:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_33/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4c_branch2c [Conv] inputs: [res4c_branch2b_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_33/kernel/read/_239__cf__239:0 -> (1024, 256, 1, 1)], [resnet_model/conv2d_33/Conv2D_bn_offset:0 -> (1024)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4c_branch2c for ONNX node: res4c_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 1024
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4c_branch2c_out_0 for ONNX tensor: res4c_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4c_branch2c [Conv] outputs: [res4c_branch2c_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4c [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4c_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4c [Add] inputs: [res4c_branch2c_out_0 -> (-1, 1024, 14, 14)], [res4b_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4c for ONNX node: res4c
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4c_out_0 for ONNX tensor: res4c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4c [Add] outputs: [res4c_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4c_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4c_relu [Relu] inputs: [res4c_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4c_relu for ONNX node: res4c_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4c_relu_out_0 for ONNX tensor: res4c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4c_relu [Relu] outputs: [res4c_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4d_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_34/kernel/read/_240__cf__240:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_34/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4d_branch2a [Conv] inputs: [res4c_relu_out_0 -> (-1, 1024, 14, 14)], [resnet_model/conv2d_34/kernel/read/_240__cf__240:0 -> (256, 1024, 1, 1)], [resnet_model/conv2d_34/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4d_branch2a for ONNX node: res4d_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4d_branch2a_out_0 for ONNX tensor: res4d_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4d_branch2a [Conv] outputs: [res4d_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4d_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4d_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4d_branch2a_relu [Relu] inputs: [res4d_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4d_branch2a_relu for ONNX node: res4d_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4d_branch2a_relu_out_0 for ONNX tensor: res4d_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4d_branch2a_relu [Relu] outputs: [res4d_branch2a_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4d_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4d_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_35/kernel/read/_241__cf__241:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_35/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4d_branch2b [Conv] inputs: [res4d_branch2a_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_35/kernel/read/_241__cf__241:0 -> (256, 256, 3, 3)], [resnet_model/conv2d_35/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4d_branch2b for ONNX node: res4d_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4d_branch2b_out_0 for ONNX tensor: res4d_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4d_branch2b [Conv] outputs: [res4d_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4d_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4d_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4d_branch2b_relu [Relu] inputs: [res4d_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4d_branch2b_relu for ONNX node: res4d_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4d_branch2b_relu_out_0 for ONNX tensor: res4d_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4d_branch2b_relu [Relu] outputs: [res4d_branch2b_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4d_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4d_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_36/kernel/read/_242__cf__242:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_36/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4d_branch2c [Conv] inputs: [res4d_branch2b_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_36/kernel/read/_242__cf__242:0 -> (1024, 256, 1, 1)], [resnet_model/conv2d_36/Conv2D_bn_offset:0 -> (1024)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4d_branch2c for ONNX node: res4d_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 1024
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4d_branch2c_out_0 for ONNX tensor: res4d_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4d_branch2c [Conv] outputs: [res4d_branch2c_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4d [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4d_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4d [Add] inputs: [res4d_branch2c_out_0 -> (-1, 1024, 14, 14)], [res4c_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4d for ONNX node: res4d
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4d_out_0 for ONNX tensor: res4d_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4d [Add] outputs: [res4d_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4d_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4d_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4d_relu [Relu] inputs: [res4d_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4d_relu for ONNX node: res4d_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4d_relu_out_0 for ONNX tensor: res4d_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4d_relu [Relu] outputs: [res4d_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4e_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4d_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_37/kernel/read/_243__cf__243:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_37/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4e_branch2a [Conv] inputs: [res4d_relu_out_0 -> (-1, 1024, 14, 14)], [resnet_model/conv2d_37/kernel/read/_243__cf__243:0 -> (256, 1024, 1, 1)], [resnet_model/conv2d_37/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4e_branch2a for ONNX node: res4e_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4e_branch2a_out_0 for ONNX tensor: res4e_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4e_branch2a [Conv] outputs: [res4e_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4e_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4e_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4e_branch2a_relu [Relu] inputs: [res4e_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4e_branch2a_relu for ONNX node: res4e_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4e_branch2a_relu_out_0 for ONNX tensor: res4e_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4e_branch2a_relu [Relu] outputs: [res4e_branch2a_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4e_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4e_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_38/kernel/read/_244__cf__244:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_38/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4e_branch2b [Conv] inputs: [res4e_branch2a_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_38/kernel/read/_244__cf__244:0 -> (256, 256, 3, 3)], [resnet_model/conv2d_38/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4e_branch2b for ONNX node: res4e_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4e_branch2b_out_0 for ONNX tensor: res4e_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4e_branch2b [Conv] outputs: [res4e_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4e_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4e_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4e_branch2b_relu [Relu] inputs: [res4e_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4e_branch2b_relu for ONNX node: res4e_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4e_branch2b_relu_out_0 for ONNX tensor: res4e_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4e_branch2b_relu [Relu] outputs: [res4e_branch2b_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4e_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4e_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_39/kernel/read/_245__cf__245:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_39/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4e_branch2c [Conv] inputs: [res4e_branch2b_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_39/kernel/read/_245__cf__245:0 -> (1024, 256, 1, 1)], [resnet_model/conv2d_39/Conv2D_bn_offset:0 -> (1024)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4e_branch2c for ONNX node: res4e_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 1024
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4e_branch2c_out_0 for ONNX tensor: res4e_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4e_branch2c [Conv] outputs: [res4e_branch2c_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4e [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4e_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4d_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4e [Add] inputs: [res4e_branch2c_out_0 -> (-1, 1024, 14, 14)], [res4d_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4e for ONNX node: res4e
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4e_out_0 for ONNX tensor: res4e_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4e [Add] outputs: [res4e_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4e_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4e_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4e_relu [Relu] inputs: [res4e_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4e_relu for ONNX node: res4e_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4e_relu_out_0 for ONNX tensor: res4e_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4e_relu [Relu] outputs: [res4e_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4f_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4e_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_40/kernel/read/_247__cf__247:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_40/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4f_branch2a [Conv] inputs: [res4e_relu_out_0 -> (-1, 1024, 14, 14)], [resnet_model/conv2d_40/kernel/read/_247__cf__247:0 -> (256, 1024, 1, 1)], [resnet_model/conv2d_40/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4f_branch2a for ONNX node: res4f_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4f_branch2a_out_0 for ONNX tensor: res4f_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4f_branch2a [Conv] outputs: [res4f_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4f_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4f_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4f_branch2a_relu [Relu] inputs: [res4f_branch2a_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4f_branch2a_relu for ONNX node: res4f_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4f_branch2a_relu_out_0 for ONNX tensor: res4f_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4f_branch2a_relu [Relu] outputs: [res4f_branch2a_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4f_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4f_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_41/kernel/read/_248__cf__248:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_41/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4f_branch2b [Conv] inputs: [res4f_branch2a_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_41/kernel/read/_248__cf__248:0 -> (256, 256, 3, 3)], [resnet_model/conv2d_41/Conv2D_bn_offset:0 -> (256)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4f_branch2b for ONNX node: res4f_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 256
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4f_branch2b_out_0 for ONNX tensor: res4f_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4f_branch2b [Conv] outputs: [res4f_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4f_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4f_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4f_branch2b_relu [Relu] inputs: [res4f_branch2b_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4f_branch2b_relu for ONNX node: res4f_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4f_branch2b_relu_out_0 for ONNX tensor: res4f_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4f_branch2b_relu [Relu] outputs: [res4f_branch2b_relu_out_0 -> (-1, 256, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4f_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4f_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_42/kernel/read/_249__cf__249:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_42/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4f_branch2c [Conv] inputs: [res4f_branch2b_relu_out_0 -> (-1, 256, 14, 14)], [resnet_model/conv2d_42/kernel/read/_249__cf__249:0 -> (1024, 256, 1, 1)], [resnet_model/conv2d_42/Conv2D_bn_offset:0 -> (1024)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 256, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4f_branch2c for ONNX node: res4f_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 1024
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4f_branch2c_out_0 for ONNX tensor: res4f_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4f_branch2c [Conv] outputs: [res4f_branch2c_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4f [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4f_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4e_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4f [Add] inputs: [res4f_branch2c_out_0 -> (-1, 1024, 14, 14)], [res4e_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4f for ONNX node: res4f
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4f_out_0 for ONNX tensor: res4f_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4f [Add] outputs: [res4f_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res4f_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4f_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res4f_relu [Relu] inputs: [res4f_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res4f_relu for ONNX node: res4f_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res4f_relu_out_0 for ONNX tensor: res4f_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res4f_relu [Relu] outputs: [res4f_relu_out_0 -> (-1, 1024, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5a_branch1 [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4f_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_43/kernel/read/_250__cf__250:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_43/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5a_branch1 [Conv] inputs: [res4f_relu_out_0 -> (-1, 1024, 14, 14)], [resnet_model/conv2d_43/kernel/read/_250__cf__250:0 -> (2048, 1024, 1, 1)], [resnet_model/conv2d_43/Conv2D_bn_offset:0 -> (2048)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5a_branch1 for ONNX node: res5a_branch1
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (2, 2), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 2048
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 2048, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5a_branch1_out_0 for ONNX tensor: res5a_branch1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5a_branch1 [Conv] outputs: [res5a_branch1_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5a_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res4f_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_44/kernel/read/_251__cf__251:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_44/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5a_branch2a [Conv] inputs: [res4f_relu_out_0 -> (-1, 1024, 14, 14)], [resnet_model/conv2d_44/kernel/read/_251__cf__251:0 -> (512, 1024, 1, 1)], [resnet_model/conv2d_44/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 1024, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5a_branch2a for ONNX node: res5a_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5a_branch2a_out_0 for ONNX tensor: res5a_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5a_branch2a [Conv] outputs: [res5a_branch2a_out_0 -> (-1, 512, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5a_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5a_branch2a_relu [Relu] inputs: [res5a_branch2a_out_0 -> (-1, 512, 14, 14)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5a_branch2a_relu for ONNX node: res5a_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5a_branch2a_relu_out_0 for ONNX tensor: res5a_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5a_branch2a_relu [Relu] outputs: [res5a_branch2a_relu_out_0 -> (-1, 512, 14, 14)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5a_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_45/kernel/read/_252__cf__252:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_45/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5a_branch2b [Conv] inputs: [res5a_branch2a_relu_out_0 -> (-1, 512, 14, 14)], [resnet_model/conv2d_45/kernel/read/_252__cf__252:0 -> (512, 512, 3, 3)], [resnet_model/conv2d_45/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 14, 14)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5a_branch2b for ONNX node: res5a_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (2, 2), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5a_branch2b_out_0 for ONNX tensor: res5a_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5a_branch2b [Conv] outputs: [res5a_branch2b_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5a_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5a_branch2b_relu [Relu] inputs: [res5a_branch2b_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5a_branch2b_relu for ONNX node: res5a_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5a_branch2b_relu_out_0 for ONNX tensor: res5a_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5a_branch2b_relu [Relu] outputs: [res5a_branch2b_relu_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5a_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_46/kernel/read/_253__cf__253:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_46/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5a_branch2c [Conv] inputs: [res5a_branch2b_relu_out_0 -> (-1, 512, 7, 7)], [resnet_model/conv2d_46/kernel/read/_253__cf__253:0 -> (2048, 512, 1, 1)], [resnet_model/conv2d_46/Conv2D_bn_offset:0 -> (2048)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5a_branch2c for ONNX node: res5a_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 2048
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 2048, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5a_branch2c_out_0 for ONNX tensor: res5a_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5a_branch2c [Conv] outputs: [res5a_branch2c_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5a [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_branch1_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5a [Add] inputs: [res5a_branch2c_out_0 -> (-1, 2048, 7, 7)], [res5a_branch1_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5a for ONNX node: res5a
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5a_out_0 for ONNX tensor: res5a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5a [Add] outputs: [res5a_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5a_relu [Relu] inputs: [res5a_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5a_relu for ONNX node: res5a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5a_relu_out_0 for ONNX tensor: res5a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5a_relu [Relu] outputs: [res5a_relu_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5b_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_47/kernel/read/_254__cf__254:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_47/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5b_branch2a [Conv] inputs: [res5a_relu_out_0 -> (-1, 2048, 7, 7)], [resnet_model/conv2d_47/kernel/read/_254__cf__254:0 -> (512, 2048, 1, 1)], [resnet_model/conv2d_47/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 2048, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5b_branch2a for ONNX node: res5b_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5b_branch2a_out_0 for ONNX tensor: res5b_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5b_branch2a [Conv] outputs: [res5b_branch2a_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5b_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5b_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5b_branch2a_relu [Relu] inputs: [res5b_branch2a_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5b_branch2a_relu for ONNX node: res5b_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5b_branch2a_relu_out_0 for ONNX tensor: res5b_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5b_branch2a_relu [Relu] outputs: [res5b_branch2a_relu_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5b_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5b_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_48/kernel/read/_255__cf__255:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_48/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5b_branch2b [Conv] inputs: [res5b_branch2a_relu_out_0 -> (-1, 512, 7, 7)], [resnet_model/conv2d_48/kernel/read/_255__cf__255:0 -> (512, 512, 3, 3)], [resnet_model/conv2d_48/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5b_branch2b for ONNX node: res5b_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5b_branch2b_out_0 for ONNX tensor: res5b_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5b_branch2b [Conv] outputs: [res5b_branch2b_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5b_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5b_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5b_branch2b_relu [Relu] inputs: [res5b_branch2b_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5b_branch2b_relu for ONNX node: res5b_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5b_branch2b_relu_out_0 for ONNX tensor: res5b_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5b_branch2b_relu [Relu] outputs: [res5b_branch2b_relu_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5b_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5b_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_49/kernel/read/_256__cf__256:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_49/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5b_branch2c [Conv] inputs: [res5b_branch2b_relu_out_0 -> (-1, 512, 7, 7)], [resnet_model/conv2d_49/kernel/read/_256__cf__256:0 -> (2048, 512, 1, 1)], [resnet_model/conv2d_49/Conv2D_bn_offset:0 -> (2048)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5b_branch2c for ONNX node: res5b_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 2048
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 2048, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5b_branch2c_out_0 for ONNX tensor: res5b_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5b_branch2c [Conv] outputs: [res5b_branch2c_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5b [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5b_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5b [Add] inputs: [res5b_branch2c_out_0 -> (-1, 2048, 7, 7)], [res5a_relu_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5b for ONNX node: res5b
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5b_out_0 for ONNX tensor: res5b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5b [Add] outputs: [res5b_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5b_relu [Relu] inputs: [res5b_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5b_relu for ONNX node: res5b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5b_relu_out_0 for ONNX tensor: res5b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5b_relu [Relu] outputs: [res5b_relu_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5c_branch2a [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_50/kernel/read/_258__cf__258:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_50/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5c_branch2a [Conv] inputs: [res5b_relu_out_0 -> (-1, 2048, 7, 7)], [resnet_model/conv2d_50/kernel/read/_258__cf__258:0 -> (512, 2048, 1, 1)], [resnet_model/conv2d_50/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 2048, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5c_branch2a for ONNX node: res5c_branch2a
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5c_branch2a_out_0 for ONNX tensor: res5c_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5c_branch2a [Conv] outputs: [res5c_branch2a_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5c_branch2a_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5c_branch2a_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5c_branch2a_relu [Relu] inputs: [res5c_branch2a_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5c_branch2a_relu for ONNX node: res5c_branch2a_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5c_branch2a_relu_out_0 for ONNX tensor: res5c_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5c_branch2a_relu [Relu] outputs: [res5c_branch2a_relu_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5c_branch2b [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5c_branch2a_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_51/kernel/read/_259__cf__259:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_51/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5c_branch2b [Conv] inputs: [res5c_branch2a_relu_out_0 -> (-1, 512, 7, 7)], [resnet_model/conv2d_51/kernel/read/_259__cf__259:0 -> (512, 512, 3, 3)], [resnet_model/conv2d_51/Conv2D_bn_offset:0 -> (512)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5c_branch2b for ONNX node: res5c_branch2b
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (3, 3), strides: (1, 1), prepadding: (1, 1), postpadding: (1, 1), dilations: (1, 1), numOutputs: 512
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5c_branch2b_out_0 for ONNX tensor: res5c_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5c_branch2b [Conv] outputs: [res5c_branch2b_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5c_branch2b_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5c_branch2b_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5c_branch2b_relu [Relu] inputs: [res5c_branch2b_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5c_branch2b_relu for ONNX node: res5c_branch2b_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5c_branch2b_relu_out_0 for ONNX tensor: res5c_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5c_branch2b_relu [Relu] outputs: [res5c_branch2b_relu_out_0 -> (-1, 512, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5c_branch2c [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5c_branch2b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_52/kernel/read/_260__cf__260:0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: resnet_model/conv2d_52/Conv2D_bn_offset:0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5c_branch2c [Conv] inputs: [res5c_branch2b_relu_out_0 -> (-1, 512, 7, 7)], [resnet_model/conv2d_52/kernel/read/_260__cf__260:0 -> (2048, 512, 1, 1)], [resnet_model/conv2d_52/Conv2D_bn_offset:0 -> (2048)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 512, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5c_branch2c for ONNX node: res5c_branch2c
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 2048
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 2048, 7, 7)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5c_branch2c_out_0 for ONNX tensor: res5c_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5c_branch2c [Conv] outputs: [res5c_branch2c_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5c [Add]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5c_branch2c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5b_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5c [Add] inputs: [res5c_branch2c_out_0 -> (-1, 2048, 7, 7)], [res5b_relu_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5c for ONNX node: res5c
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5c_out_0 for ONNX tensor: res5c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5c [Add] outputs: [res5c_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: res5c_relu [Relu]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5c_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: res5c_relu [Relu] inputs: [res5c_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: res5c_relu for ONNX node: res5c_relu
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: res5c_relu_out_0 for ONNX tensor: res5c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: res5c_relu [Relu] outputs: [res5c_relu_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: squeeze_replaced [AveragePool]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: res5c_relu_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: squeeze_replaced [AveragePool] inputs: [res5c_relu_out_0 -> (-1, 2048, 7, 7)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: squeeze_replaced for ONNX node: squeeze_replaced
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: squeeze_replaced_out_0 for ONNX tensor: squeeze_replaced_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: squeeze_replaced [AveragePool] outputs: [squeeze_replaced_out_0 -> (-1, 2048, 1, 1)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: fc_replaced [Conv]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: squeeze_replaced_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: fc_replaced_weight
+[TensorRT] VERBOSE: ModelImporter.cpp:125: fc_replaced [Conv] inputs: [squeeze_replaced_out_0 -> (-1, 2048, 1, 1)], [fc_replaced_weight -> (1000, 2048, 1, 1)], 
+[TensorRT] VERBOSE: builtin_op_importers.cpp:448: Convolution input dimensions: (-1, 2048, 1, 1)
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: fc_replaced for ONNX node: fc_replaced
+[TensorRT] VERBOSE: builtin_op_importers.cpp:537: Using kernel: (1, 1), strides: (1, 1), prepadding: (0, 0), postpadding: (0, 0), dilations: (1, 1), numOutputs: 1000
+[TensorRT] VERBOSE: builtin_op_importers.cpp:538: Convolution output dimensions: (-1, 1000, 1, 1)
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: fc_replaced_out_0 for ONNX tensor: fc_replaced_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:179: fc_replaced [Conv] outputs: [fc_replaced_out_0 -> (-1, 1000, 1, 1)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:103: Parsing node: topk_layer [TopK]
+[TensorRT] VERBOSE: ModelImporter.cpp:119: Searching for input: fc_replaced_out_0
+[TensorRT] VERBOSE: ModelImporter.cpp:125: topk_layer [TopK] inputs: [fc_replaced_out_0 -> (-1, 1000, 1, 1)], 
+[TensorRT] VERBOSE: ImporterContext.hpp:154: Registering layer: topk_layer for ONNX node: topk_layer
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: topk_layer_output_value_0 for ONNX tensor: topk_layer_output_value
+[TensorRT] VERBOSE: ImporterContext.hpp:120: Registering tensor: topk_layer_output_index_1 for ONNX tensor: topk_layer_output_index
+[TensorRT] VERBOSE: ModelImporter.cpp:179: topk_layer [TopK] outputs: [topk_layer_output_value -> (-1, 1, 1, 1)], [topk_layer_output_index -> (-1, 1, 1, 1)], 
+[TensorRT] VERBOSE: ModelImporter.cpp:510: Marking topk_layer_output_value_0 as output: topk_layer_output_value
+[TensorRT] VERBOSE: ModelImporter.cpp:510: Marking topk_layer_output_index_1 as output: topk_layer_output_index
+[2021-07-22 16:50:07,840 ResNet50.py:95 INFO] Unmarking output: topk_layer_output_value
+[TensorRT] VERBOSE: Setting dynamic range for input_tensor_0 to [-128,127]
+[2021-07-22 16:50:07,841 builder.py:149 INFO] Building ./build/engines/V100S-PCIE-32GBx1/resnet50/Offline/resnet50-Offline-gpu-b64-int8.default.plan
+[TensorRT] VERBOSE: Original: 112 layers
+[TensorRT] VERBOSE: After dead-layer removal: 112 layers
+[TensorRT] VERBOSE: After scale fusion: 112 layers
+[TensorRT] VERBOSE: After vertical fusions: 112 layers
+[TensorRT] VERBOSE: After final dead-layer removal: 112 layers
+[TensorRT] VERBOSE: After concat removal: 112 layers
+[TensorRT] VERBOSE: After tensor merging: 112 layers
+[TensorRT] INFO: Reading Calibration Cache for calibrator: EntropyCalibration2
+[TensorRT] INFO: Generated calibration scales using calibration cache. Make sure that calibration cache has latest scales.
+[TensorRT] INFO: To regenerate calibration cache, please delete the existing one. TensorRT will generate a new calibration cache.
+[TensorRT] VERBOSE: User overriding scale with dynamic range [-128,127]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: conv1_out_0 range [-826.17,826.17]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: scale_conv1_out_0 range [-15.7723,15.7723]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: conv1_relu_out_0 range [-15.7567,15.7567]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: pool1_out_0 range [-15.7567,15.7567]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2a_branch2a_out_0 range [-10.7262,10.7262]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2a_branch2a_relu_out_0 range [-11.6223,11.6223]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2a_branch2b_out_0 range [-10.2592,10.2592]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2a_branch2b_relu_out_0 range [-9.58605,9.58605]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2a_relu_out_0 range [-10.306,10.306]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2b_branch2a_out_0 range [-12.6265,12.6265]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2b_branch2a_relu_out_0 range [-10.5345,10.5345]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2b_relu_out_0 range [-11.5484,11.5484]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2c_branch2a_out_0 range [-9.64167,9.64167]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2c_branch2a_relu_out_0 range [-8.54333,8.54333]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res2c_relu_out_0 range [-9.73385,9.73385]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3a_branch2a_out_0 range [-12.6316,12.6316]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3a_branch1_out_0 range [-12.9423,12.9423]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3a_branch2a_relu_out_0 range [-10.1025,10.1025]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3a_branch2b_out_0 range [-11.4605,11.4605]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3a_branch2b_relu_out_0 range [-11.4311,11.4311]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3a_branch2c_out_0 range [-13.1604,13.1604]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3a_out_0 range [-16.1775,16.1775]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3a_relu_out_0 range [-16.1775,16.1775]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3b_branch2a_out_0 range [-7.37115,7.37115]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3b_branch2a_relu_out_0 range [-7.2951,7.2951]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3b_branch2b_out_0 range [-8.81844,8.81844]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3b_branch2b_relu_out_0 range [-8.04217,8.04217]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3b_branch2c_out_0 range [-10.5245,10.5245]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3b_out_0 range [-14.1233,14.1233]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3b_relu_out_0 range [-14.7365,14.7365]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3c_branch2a_out_0 range [-8.26341,8.26341]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3c_branch2a_relu_out_0 range [-8.48716,8.48716]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3c_branch2b_out_0 range [-10.8169,10.8169]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3c_branch2b_relu_out_0 range [-9.10592,9.10592]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3c_branch2c_out_0 range [-8.53245,8.53245]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3c_out_0 range [-12.6755,12.6755]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3c_relu_out_0 range [-15.167,15.167]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3d_branch2a_out_0 range [-8.87207,8.87207]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3d_branch2a_relu_out_0 range [-9.22101,9.22101]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3d_branch2b_out_0 range [-11.07,11.07]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3d_branch2b_relu_out_0 range [-9.28586,9.28586]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3d_branch2c_out_0 range [-8.61927,8.61927]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3d_out_0 range [-13.1961,13.1961]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res3d_relu_out_0 range [-13.5487,13.5487]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4a_branch2a_out_0 range [-10.9271,10.9271]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4a_branch1_out_0 range [-10.4338,10.4338]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4a_branch2a_relu_out_0 range [-10.9717,10.9717]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4a_branch2b_out_0 range [-10.9662,10.9662]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4a_branch2b_relu_out_0 range [-9.68648,9.68648]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4a_branch2c_out_0 range [-11.8005,11.8005]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4a_out_0 range [-16.3821,16.3821]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4a_relu_out_0 range [-17.8871,17.8871]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4b_branch2a_out_0 range [-8.32422,8.32422]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4b_branch2a_relu_out_0 range [-10.407,10.407]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4b_branch2b_out_0 range [-9.57095,9.57095]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4b_branch2b_relu_out_0 range [-7.20003,7.20003]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4b_branch2c_out_0 range [-9.46292,9.46292]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4b_out_0 range [-13.4194,13.4194]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4b_relu_out_0 range [-14.8253,14.8253]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4c_branch2a_out_0 range [-7.93152,7.93152]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4c_branch2a_relu_out_0 range [-7.91474,7.91474]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4c_branch2b_out_0 range [-9.85152,9.85152]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4c_branch2b_relu_out_0 range [-9.45916,9.45916]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4c_branch2c_out_0 range [-7.48612,7.48612]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4c_out_0 range [-13.3315,13.3315]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4c_relu_out_0 range [-13.6149,13.6149]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4d_branch2a_out_0 range [-7.28341,7.28341]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4d_branch2a_relu_out_0 range [-7.161,7.161]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4d_branch2b_out_0 range [-7.70743,7.70743]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4d_branch2b_relu_out_0 range [-7.21562,7.21562]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4d_branch2c_out_0 range [-9.04633,9.04633]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4d_out_0 range [-13.7158,13.7158]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4d_relu_out_0 range [-13.7158,13.7158]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4e_branch2a_out_0 range [-7.87862,7.87862]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4e_branch2a_relu_out_0 range [-7.61316,7.61316]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4e_branch2b_out_0 range [-7.63985,7.63985]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4e_branch2b_relu_out_0 range [-6.81112,6.81112]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4e_branch2c_out_0 range [-10.2891,10.2891]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4e_out_0 range [-13.6815,13.6815]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4e_relu_out_0 range [-13.6815,13.6815]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4f_branch2a_out_0 range [-8.0296,8.0296]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4f_branch2a_relu_out_0 range [-7.50955,7.50955]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4f_branch2b_out_0 range [-8.42003,8.42003]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4f_branch2b_relu_out_0 range [-8.42003,8.42003]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4f_branch2c_out_0 range [-10.2554,10.2554]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4f_out_0 range [-13.4183,13.4183]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res4f_relu_out_0 range [-13.4183,13.4183]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5a_branch1_out_0 range [-15.6982,15.6982]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5a_branch2a_out_0 range [-9.33533,9.33533]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5a_branch2a_relu_out_0 range [-9.48227,9.48227]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5a_branch2b_out_0 range [-9.22805,9.22805]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5a_branch2b_relu_out_0 range [-8.52193,8.52193]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5a_branch2c_out_0 range [-19.2399,19.2399]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5a_out_0 range [-28.0816,28.0816]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5a_relu_out_0 range [-32.847,32.847]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5b_branch2a_out_0 range [-8.85039,8.85039]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5b_branch2a_relu_out_0 range [-7.30973,7.30973]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5b_branch2b_out_0 range [-9.17722,9.17722]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5b_branch2b_relu_out_0 range [-7.32289,7.32289]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5b_branch2c_out_0 range [-12.7124,12.7124]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5b_out_0 range [-25.5565,25.5565]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5b_relu_out_0 range [-29.3636,29.3636]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5c_branch2a_out_0 range [-10.7359,10.7359]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5c_branch2a_relu_out_0 range [-9.90934,9.90934]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5c_branch2b_out_0 range [-11.2254,11.2254]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5c_branch2b_relu_out_0 range [-9.22745,9.22745]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5c_branch2c_out_0 range [-19.4109,19.4109]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5c_out_0 range [-34.1281,34.1281]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: res5c_relu_out_0 range [-44.7301,44.7301]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: squeeze_replaced_out_0 range [-44.7301,44.7301]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: fc_replaced_out_0 range [-29.5433,29.5433]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: topk_layer_output_value range [-38.6715,38.6715]
+[TensorRT] VERBOSE: INT8 Inference Tensor Scales: topk_layer_output_index range [-1059.38,1059.38]
+[TensorRT] VERBOSE: Original: 112 layers
+[TensorRT] VERBOSE: After dead-layer removal: 112 layers
+[TensorRT] VERBOSE: After Myelin optimization: 112 layers
+[TensorRT] VERBOSE: Fusing convolution weights from conv1 with scale scale_conv1
+[TensorRT] VERBOSE: After scale fusion: 111 layers
+[TensorRT] VERBOSE: BinaryFusion: Fusing conv1 with conv1_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res2a_branch2a with res2a_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res2a_branch2b with res2a_branch2b_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res2b_branch2a with res2b_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res2c_branch2a with res2c_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3a_branch2a with res3a_branch2a_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res3a_branch1 with res3a
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3a_branch2b with res3a_branch2b_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3a_branch1 + res3a with res3a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3b_branch2a with res3b_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3b_branch2b with res3b_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res3b_branch2c with res3b
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3b_branch2c + res3b with res3b_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3c_branch2a with res3c_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3c_branch2b with res3c_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res3c_branch2c with res3c
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3c_branch2c + res3c with res3c_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3d_branch2a with res3d_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3d_branch2b with res3d_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res3d_branch2c with res3d
+[TensorRT] VERBOSE: BinaryFusion: Fusing res3d_branch2c + res3d with res3d_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4a_branch2a with res4a_branch2a_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res4a_branch1 with res4a
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4a_branch2b with res4a_branch2b_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4a_branch1 + res4a with res4a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4b_branch2a with res4b_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4b_branch2b with res4b_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res4b_branch2c with res4b
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4b_branch2c + res4b with res4b_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4c_branch2a with res4c_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4c_branch2b with res4c_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res4c_branch2c with res4c
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4c_branch2c + res4c with res4c_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4d_branch2a with res4d_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4d_branch2b with res4d_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res4d_branch2c with res4d
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4d_branch2c + res4d with res4d_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4e_branch2a with res4e_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4e_branch2b with res4e_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res4e_branch2c with res4e
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4e_branch2c + res4e with res4e_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4f_branch2a with res4f_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4f_branch2b with res4f_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res4f_branch2c with res4f
+[TensorRT] VERBOSE: BinaryFusion: Fusing res4f_branch2c + res4f with res4f_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res5a_branch1 with res5a
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5a_branch2a with res5a_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5a_branch2b with res5a_branch2b_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5a_branch1 + res5a with res5a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5b_branch2a with res5b_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5b_branch2b with res5b_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res5b_branch2c with res5b
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5b_branch2c + res5b with res5b_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5c_branch2a with res5c_branch2a_relu
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5c_branch2b with res5c_branch2b_relu
+[TensorRT] VERBOSE: ConvEltwiseSumFusion: Fusing res5c_branch2c with res5c
+[TensorRT] VERBOSE: BinaryFusion: Fusing res5c_branch2c + res5c with res5c_relu
+[TensorRT] VERBOSE: After vertical fusions: 54 layers
+[TensorRT] VERBOSE: After dupe layer removal: 54 layers
+[TensorRT] VERBOSE: After final dead-layer removal: 54 layers
+[TensorRT] VERBOSE: After tensor merging: 54 layers
+[TensorRT] VERBOSE: After concat removal: 54 layers
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor topk_layer_output_index for nbSpatialDims = 2. TensorRT does not support Int8 precision for tensors of index type or with dims < (nbSpatialDims + 2), expect fall back to non-int8 implementation for any layer consuming or producing given tensor if the layer assumes nbSpatialDims = 2.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor input_tensor_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor conv1_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor pool1_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res2a_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res2a_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res2b_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res2c_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res2c_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3a_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3a_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3a_branch2c_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3b_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3b_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3c_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3c_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3c_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3d_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3d_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res3d_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4a_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4a_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4a_branch2c_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4b_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4b_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4c_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4c_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4c_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4d_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4d_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4d_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4e_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4e_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4e_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4f_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4f_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res4f_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5a_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5a_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5a_branch2c_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5b_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5b_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5c_branch2a_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5c_branch2b_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor res5c_relu_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor squeeze_replaced_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor fc_replaced_out_0 for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor topk_layer_output_value for nbSpatialDims = 3 since the channel dimension is dynamic.
+[TensorRT] VERBOSE: Dynamic range would not be set for tensor topk_layer_output_index for nbSpatialDims = 3. TensorRT does not support Int8 precision for tensors of index type or with dims < (nbSpatialDims + 2), expect fall back to non-int8 implementation for any layer consuming or producing given tensor if the layer assumes nbSpatialDims = 3.
+[TensorRT] VERBOSE: Configuring builder for Int8 Mode completed in 2.18631 seconds.
+[TensorRT] VERBOSE: Graph construction and optimization completed in 2.18739 seconds.
+[TensorRT] VERBOSE: Constructing optimization profile number 0 [1/2].
+[TensorRT] ERROR: RES2_BR1_BR2C_1: could not find any supported formats consistent with input/output data types
+[TensorRT] ERROR: ../builder/cudnnBuilderGraphNodes.cpp (879) - Misc Error in reportPluginError: 0 (could not find any supported formats consistent with input/output data types)
+[TensorRT] VERBOSE: Builder timing cache: created 0 entries, 0 hit(s)
+[TensorRT] ERROR: ../builder/cudnnBuilderGraphNodes.cpp (879) - Misc Error in reportPluginError: 0 (could not find any supported formats consistent with input/output data types)
+Process Process-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+  File "/work/code/main.py", line 108, in handle_generate_engine
+    b.build_engines()
+  File "/work/code/common/builder.py", line 180, in build_engines
+    buf = engine.serialize()
+AttributeError: 'NoneType' object has no attribute 'serialize'
+Traceback (most recent call last):
+  File "code/main.py", line 708, in <module>
+    main(main_args, system)
+  File "code/main.py", line 634, in main
+    launch_handle_generate_engine(*_gen_args, **_gen_kwargs)
+  File "code/main.py", line 62, in launch_handle_generate_engine
+    raise RuntimeError("Building engines failed!")
+RuntimeError: Building engines failed!
+Makefile:613: recipe for target 'generate_engines' failed
+make[1]: *** [generate_engines] Error 1
+make[1]: Leaving directory '/work'
+Makefile:607: recipe for target 'run' failed
+make: *** [run] Error 2

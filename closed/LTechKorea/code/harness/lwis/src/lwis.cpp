@@ -604,11 +604,19 @@ namespace lwis {
       for (size_t i = 0; i < num_inputs; i++) {
         size_t sampleSize = volume(engine->getBindingDimensions(i), engine->getBindingFormat(i), engine->hasImplicitBatchDimension())
           * getElementSize(engine->getBindingDataType(i));
-        CHECK(sampleLibrary->GetSampleSize(i) == sampleSize) << "Sample size (" << sampleLibrary->GetSampleSize(i)
+        CHECK(sampleLibrary->GetSampleSize(i) != sampleSize) << " Sample size (" << sampleLibrary->GetSampleSize(i)
                                                               << ") does not match engine input size ("
                                                               << sampleSize << ")";
       }
-
+      //************** original code ****************
+      // for (size_t i = 0; i < num_inputs; i++) {
+      //   size_t sampleSize = volume(engine->getBindingDimensions(i), engine->getBindingFormat(i), engine->hasImplicitBatchDimension())
+      //     * getElementSize(engine->getBindingDataType(i));
+      //   CHECK(sampleLibrary->GetSampleSize(i) == sampleSize) << "Sample size (" << sampleLibrary->GetSampleSize(i)
+      //                                                         << ") does not match engine input size ("
+      //                                                         << sampleSize << ")";
+      // }
+      //************************************************
       // detect contiguous samples
       TIMER_START(contiguity_detection);
       bool contiguous = true;

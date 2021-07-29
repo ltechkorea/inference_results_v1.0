@@ -1,0 +1,152 @@
+Launching Docker session
+docker run --gpus "device= 0" --rm -t -w /work \
+	-v /home/tanssg/inference_results_v1.0/closed/LTechKorea:/work -v /home/tanssg:/mnt//home/tanssg \
+	--cap-add SYS_ADMIN --cap-add SYS_TIME \
+	-e NVIDIA_VISIBLE_DEVICES=0,1 \
+	--shm-size=32gb \
+	-v /etc/timezone:/etc/timezone:ro -v /etc/localtime:/etc/localtime:ro \
+	--security-opt apparmor=unconfined --security-opt seccomp=unconfined \
+	--name mlperf-inference-tanssg -h mlperf-inference-tanssg --add-host mlperf-inference-tanssg:127.0.0.1 \
+	--user 1002:1002 --net host --device /dev/fuse \
+	-v /opt/data/scratch.mlperf_inference:/opt/data/scratch.mlperf_inference -v /opt/data/Dataset:/opt/data/Dataset  \
+	-e MLPERF_SCRATCH_PATH=/opt/data/scratch.mlperf_inference \
+	-e HOST_HOSTNAME=ltech-gpu10 \
+	-e LD_LIBRARY_PATH=:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu:/home/tanssg/inference_results_v1.0/closed/LTechKorea/build/inference/loadgen/build:/usr/local/cuda-11.1/targets/x86_64-linux/lib/ \
+	 \
+	mlperf-inference:tanssg make run_harness RUN_ARGS="--benchmarks=resnet50 --scenarios=Offline,Server --config_ver=default --fast --verbose"
+[2021-07-22 15:18:49,084 __init__.py:255 INFO] Running command: CUDA_VISIBILE_ORDER=PCI_BUS_ID nvidia-smi --query-gpu=gpu_name,pci.device_id,uuid --format=csv
+[2021-07-22 15:18:49,115 main.py:701 INFO] Detected System ID: V100S-PCIE-32GBx1
+==============main.py================
+system.get_id V100S-PCIE-32GBx1
+main_args=  {'action': 'run_harness', 'audit_test': None, 'benchmarks': 'resnet50', 'config_ver': 'default', 'configs': '', 'gpu_only': False, 'no_child_process': False, 'no_gpu': False, 'power': False, 'profile': None, 'scenarios': 'Offline,Server', 'system_name': None} system=  V100S-PCIE-32GBx1
+=====================================
+[2021-07-22 15:18:49,126 main.py:529 INFO] Using config files: configs/resnet50/Offline/config.json,configs/resnet50/Server/config.json
+[2021-07-22 15:18:49,126 __init__.py:341 INFO] Parsing config file configs/resnet50/Offline/config.json ...
+[2021-07-22 15:18:49,127 __init__.py:341 INFO] Parsing config file configs/resnet50/Server/config.json ...
+[2021-07-22 15:18:49,127 main.py:542 INFO] Processing config "V100S-PCIE-32GBx1_resnet50_Offline"
+[2021-07-22 15:18:49,127 main.py:224 INFO] Running harness for resnet50 benchmark in Offline scenario...
+=============harness.py==============
+config=  {'input_dtype': 'int16', 'input_format': 'linear', 'map_path': 'data_maps/imagenet/val_map.txt', 'precision': 'int16', 'tensor_path': '${PREPROCESSED_DATA_DIR}/imagenet/ResNet50/int8_linear', 'use_graphs': False, 'workspace_size': 1610612736, 'gpu_batch_size': 64, 'gpu_copy_streams': 2, 'gpu_offline_expected_qps': 8000, 'system_id': 'V100S-PCIE-32GBx1', 'scenario': 'Offline', 'benchmark': 'resnet50', 'config_name': 'V100S-PCIE-32GBx1_resnet50_Offline', 'accuracy_level': '99%', 'optimization_level': 'plugin-enabled', 'inference_server': 'lwis', 'config_ver': 'default', 'system_name': None, 'verbose': True, 'fast': True, 'gpu_num_bundles': 2, 'log_dir': '/work/build/logs/2021.07.22-15.18.40'} benchmark_name=  resnet50
+=====================================
+[2021-07-22 15:18:49,135 harness.py:60 INFO] ===== Harness arguments for resnet50 =====
+[2021-07-22 15:18:49,135 harness.py:62 INFO] input_dtype=int16
+[2021-07-22 15:18:49,135 harness.py:62 INFO] input_format=linear
+[2021-07-22 15:18:49,135 harness.py:62 INFO] map_path=data_maps/imagenet/val_map.txt
+[2021-07-22 15:18:49,135 harness.py:62 INFO] precision=int16
+[2021-07-22 15:18:49,136 harness.py:62 INFO] tensor_path=${PREPROCESSED_DATA_DIR}/imagenet/ResNet50/int8_linear
+[2021-07-22 15:18:49,136 harness.py:62 INFO] use_graphs=False
+[2021-07-22 15:18:49,136 harness.py:62 INFO] workspace_size=1610612736
+[2021-07-22 15:18:49,136 harness.py:62 INFO] gpu_batch_size=64
+[2021-07-22 15:18:49,136 harness.py:62 INFO] gpu_copy_streams=2
+[2021-07-22 15:18:49,136 harness.py:62 INFO] gpu_offline_expected_qps=8000
+[2021-07-22 15:18:49,136 harness.py:62 INFO] system_id=V100S-PCIE-32GBx1
+[2021-07-22 15:18:49,136 harness.py:62 INFO] scenario=Offline
+[2021-07-22 15:18:49,136 harness.py:62 INFO] benchmark=resnet50
+[2021-07-22 15:18:49,136 harness.py:62 INFO] config_name=V100S-PCIE-32GBx1_resnet50_Offline
+[2021-07-22 15:18:49,137 harness.py:62 INFO] accuracy_level=99%
+[2021-07-22 15:18:49,137 harness.py:62 INFO] optimization_level=plugin-enabled
+[2021-07-22 15:18:49,137 harness.py:62 INFO] inference_server=lwis
+[2021-07-22 15:18:49,137 harness.py:62 INFO] config_ver=default
+[2021-07-22 15:18:49,137 harness.py:62 INFO] system_name=None
+[2021-07-22 15:18:49,137 harness.py:62 INFO] verbose=True
+[2021-07-22 15:18:49,137 harness.py:62 INFO] fast=True
+[2021-07-22 15:18:49,137 harness.py:62 INFO] gpu_num_bundles=2
+[2021-07-22 15:18:49,137 harness.py:62 INFO] log_dir=/work/build/logs/2021.07.22-15.18.40
+input_dtype : int16
+input_format : linear
+map_path : data_maps/imagenet/val_map.txt
+precision : int16
+tensor_path : ${PREPROCESSED_DATA_DIR}/imagenet/ResNet50/int8_linear
+use_graphs : False
+workspace_size : 1610612736
+gpu_batch_size : 64
+gpu_copy_streams : 2
+gpu_offline_expected_qps : 8000
+system_id : V100S-PCIE-32GBx1
+scenario : Offline
+benchmark : resnet50
+config_name : V100S-PCIE-32GBx1_resnet50_Offline
+accuracy_level : 99%
+optimization_level : plugin-enabled
+inference_server : lwis
+config_ver : default
+system_name : None
+verbose : True
+fast : True
+gpu_num_bundles : 2
+log_dir : /work/build/logs/2021.07.22-15.18.40
+[2021-07-22 15:18:49,139 __init__.py:255 INFO] Running command: ./build/bin/harness_default --verbose=true --logfile_outdir="/work/build/logs/2021.07.22-15.18.40/V100S-PCIE-32GBx1_TRT/resnet50/Offline" --logfile_prefix="mlperf_log_" --performance_sample_count=2048 --gpu_copy_streams=2 --gpu_batch_size=64 --map_path="data_maps/imagenet/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/imagenet/ResNet50/int8_linear" --use_graphs=false --gpu_engines="./build/engines/V100S-PCIE-32GBx1/resnet50/Offline/resnet50-Offline-gpu-b64-int16.default.plan" --mlperf_conf_path="measurements/V100S-PCIE-32GBx1_TRT/resnet50/Offline/mlperf.conf" --user_conf_path="measurements/V100S-PCIE-32GBx1_TRT/resnet50/Offline/user.conf" --max_dlas=0 --scenario Offline --model resnet50
+[2021-07-22 15:18:49,139 __init__.py:261 INFO] Overriding Environment
+&&&& RUNNING Default_Harness # ./build/bin/harness_default
+[I] mlperf.conf path: measurements/V100S-PCIE-32GBx1_TRT/resnet50/Offline/mlperf.conf
+[I] user.conf path: measurements/V100S-PCIE-32GBx1_TRT/resnet50/Offline/user.conf
+Creating QSL.
+Finished Creating QSL.
+Setting up SUT.
+[V] [TRT] Registered plugin creator - ::GridAnchor_TRT version 1
+[V] [TRT] Registered plugin creator - ::NMS_TRT version 1
+[V] [TRT] Registered plugin creator - ::Reorg_TRT version 1
+[V] [TRT] Registered plugin creator - ::Region_TRT version 1
+[V] [TRT] Registered plugin creator - ::Clip_TRT version 1
+[V] [TRT] Registered plugin creator - ::LReLU_TRT version 1
+[V] [TRT] Registered plugin creator - ::PriorBox_TRT version 1
+[V] [TRT] Registered plugin creator - ::Normalize_TRT version 1
+[V] [TRT] Registered plugin creator - ::RPROI_TRT version 1
+[V] [TRT] Registered plugin creator - ::BatchedNMS_TRT version 1
+[V] [TRT] Registered plugin creator - ::BatchedNMSDynamic_TRT version 1
+[V] [TRT] Registered plugin creator - ::FlattenConcat_TRT version 1
+[V] [TRT] Registered plugin creator - ::CropAndResize version 1
+[V] [TRT] Registered plugin creator - ::DetectionLayer_TRT version 1
+[V] [TRT] Registered plugin creator - ::Proposal version 1
+[V] [TRT] Registered plugin creator - ::ProposalLayer_TRT version 1
+[V] [TRT] Registered plugin creator - ::PyramidROIAlign_TRT version 1
+[V] [TRT] Registered plugin creator - ::ResizeNearest_TRT version 1
+[V] [TRT] Registered plugin creator - ::Split version 1
+[V] [TRT] Registered plugin creator - ::SpecialSlice_TRT version 1
+[V] [TRT] Registered plugin creator - ::InstanceNormalization_TRT version 1
+[V] [TRT] Deserialize required 8210731 microseconds.
+[I] Device:0: ./build/engines/V100S-PCIE-32GBx1/resnet50/Offline/resnet50-Offline-gpu-b64-int16.default.plan has been successfully loaded.
+[V] [TRT] Allocated persistent device memory of size 114219008
+[V] [TRT] Allocated activation device memory of size 642252800
+[V] [TRT] Assigning persistent memory blocks for various profiles
+[V] [TRT] Allocated persistent device memory of size 114219008
+[V] [TRT] Allocated activation device memory of size 642252800
+[W] [TRT] Could not set default profile 0 for execution context. Profile index must be set explicitly.
+[V] [TRT] Assigning persistent memory blocks for various profiles
+[I] Creating batcher thread: 0 EnableBatcherThreadPerDevice: false
+Finished setting up SUT.
+Starting warmup. Running for a minimum of 5 seconds.
+Finished warmup. Ran for 5.48851s.
+Starting running actual test.
+F0722 15:19:19.378069    63 lwis.cpp:607] Check failed: sampleLibrary->GetSampleSize(i) == sampleSize Sample size (150528) does not match engine input size (602112)
+*** Check failure stack trace: ***
+    @     0x7f65894fa362  google::LogMessage::Fail()
+    @     0x7f65894fa2aa  google::LogMessage::SendToLog()
+    @     0x7f65894f9beb  google::LogMessage::Flush()
+    @     0x7f65894fd066  google::LogMessageFatal::~LogMessageFatal()
+    @     0x55d14dfb4c1c  lwis::Server::CopySamples()
+    @     0x55d14dfbab6f  lwis::Server::IssueBatch()
+    @     0x55d14dfbd326  lwis::Server::ProcessSamples()
+    @     0x7f65623186df  (unknown)
+    @     0x7f65625ed609  start_thread
+    @     0x7f656201f103  clone
+    @              (nil)  (unknown)
+Aborted (core dumped)
+Traceback (most recent call last):
+  File "code/main.py", line 279, in handle_run_harness
+    result = harness.run_harness()
+  File "/work/code/common/harness.py", line 280, in run_harness
+    output = run_command(cmd, get_output=True, custom_env=self.env_vars)
+  File "/work/code/common/__init__.py", line 275, in run_command
+    raise subprocess.CalledProcessError(ret, cmd)
+subprocess.CalledProcessError: Command './build/bin/harness_default --verbose=true --logfile_outdir="/work/build/logs/2021.07.22-15.18.40/V100S-PCIE-32GBx1_TRT/resnet50/Offline" --logfile_prefix="mlperf_log_" --performance_sample_count=2048 --gpu_copy_streams=2 --gpu_batch_size=64 --map_path="data_maps/imagenet/val_map.txt" --tensor_path="${PREPROCESSED_DATA_DIR}/imagenet/ResNet50/int8_linear" --use_graphs=false --gpu_engines="./build/engines/V100S-PCIE-32GBx1/resnet50/Offline/resnet50-Offline-gpu-b64-int16.default.plan" --mlperf_conf_path="measurements/V100S-PCIE-32GBx1_TRT/resnet50/Offline/mlperf.conf" --user_conf_path="measurements/V100S-PCIE-32GBx1_TRT/resnet50/Offline/user.conf" --max_dlas=0 --scenario Offline --model resnet50' returned non-zero exit status 134.
+Traceback (most recent call last):
+  File "code/main.py", line 708, in <module>
+    main(main_args, system)
+  File "code/main.py", line 649, in main
+    handle_run_harness(benchmark_conf, need_gpu, need_dla, profile, power)
+  File "code/main.py", line 288, in handle_run_harness
+    raise RuntimeError("Run harness failed!")
+RuntimeError: Run harness failed!
+Makefile:618: recipe for target 'run_harness' failed
+make: *** [run_harness] Error 1
