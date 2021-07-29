@@ -11,10 +11,13 @@ TOPOLOGY="3d-unet ssd-resnet34"
 SCENARIO="Offline Server"
 ACCURACY="default"
 
+echo -e "\n\n START!!! ===== $(date) =====\n"
+
 #make prebuild
 if [ ! -e  "$(pwd)/build" ] ; then
   echo "Building pre-requisites..."
   make launch_docker DOCKER_COMMAND='make build'
+  echo -e "===== $(date) =====\n"
 fi
 
 #
@@ -48,18 +51,27 @@ do
         --config_ver=${accuracy} \
         --test_mode=SubmissionRun \
         --verbose --fast"
+
+      echo -e "\n\n START!!! ===== $(date) =====\n"
       echo "[${topology}_${scenario}_${accuracy}] Generating Engines..."
+      echo -e "===== $(date) =====\n"
       make launch_docker DOCKER_COMMAND="make generate_engines RUN_ARGS=\"${RUN_ARGS}\""
 
       echo "[${topology}_${scenario}_${accuracy}] Running Harness..."
+      echo -e "===== $(date) =====\n"
       make launch_docker DOCKER_COMMAND="make run_harness RUN_ARGS=\"${RUN_ARGS}\""
 
       echo "[${topology}_${scenario}_${accuracy}] Update Results..."
+      echo -e "===== $(date) =====\n"
       make update_results
 
       echo "[${topology}_${scenario}_${accuracy}] Running Compliance..."
+      echo -e "===== $(date) =====\n"
       #make launch_docker DOCKER_COMMAND="make run_audit_harness RUN_ARGS=\"${RUN_ARGS}\""
+      echo "[${topology}_${scenario}_${accuracy}] Update Compliance..."
+      echo -e "===== $(date) =====\n"
       #make update_compliance
+      echo -e "END!!! ===== $(date) =====\n\n"
     done  # accuracy
   done  # scenario
 done  # topology
@@ -68,13 +80,17 @@ done  # topology
 
 # Truncate Accuracy Logs
 echo "[ ${SUBMITTER} ] Truncate Accuracy Logs..."
+echo -e "===== $(date) =====\n"
 make truncate_results SUBMITTER=${SUBMITTER}
 
 # Subission Checker
 echo "[ ${SUBMITTER} ] Submission Checking..."
+echo -e "===== $(date) =====\n"
 make check_submission SUBMITTER=${SUBMITTER}
 
 # Encrypting for Submission
 echo "[ ${SUBMITTER} ] Encrypting and Packing..."
+echo -e "===== $(date) =====\n"
 bash scripts/pack_submission.sh --pack
+echo -e "===== $(date) =====\n"
 
