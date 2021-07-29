@@ -1,3 +1,4 @@
+#/!/bin/bash
 # Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,14 +50,18 @@
 # INFO:main:Results=265, NoResults=0
 # INFO:main:SUMMARY: submission looks OK
 
+RESULT_TOP_DIR=${RESULT_TOP_DIR:-$(pwd)/../..}
 
-SUBMITTER=COMPANY
-TARBALL_NAME=mlperf_submission_${SUBMITTER}.tar.gz
-SHA1_FILE_NAME=mlperf_submission_${SUBMITTER}.sha1
+SUBMITTER=LTechKorea
+TARBALL_NAME=${RESULT_TOP_DIR}/mlperf_submission_${SUBMITTER}.tar.gz
+SHA1_FILE_NAME=${RESULT_TOP_DIR}/mlperf_submission_${SUBMITTER}.sha1
+
+echo "Changing directory to ${RESULT_TOP_DIR}"
+cd ${RESULT_TOP_DIR} || exit 1
 
 if [ "$1" = "--pack" ]; then
     echo "Packing tarball and encrypting"
-    tar -cvzf - closed/ open/ | openssl enc -e -aes256 -out ${TARBALL_NAME}
+    tar -czf - ./closed/${SUBMITTER} ./open/${SUBMITTER} | openssl enc -e -aes256 -out ${TARBALL_NAME}
     echo "Generating sha1sum of tarball"
     sha1sum ${TARBALL_NAME} | tee ${SHA1_FILE_NAME}
 elif [ "$1" = "--unpack" ]; then
@@ -70,4 +75,3 @@ elif [ "$1" = "--unpack" ]; then
 else
     echo "Unrecognized flag. Must specify --pack or --unpack"
 fi
-
