@@ -34,6 +34,9 @@ ARG CUDA_VER=11.1
 ARG DRIVER_VER_MAJOR=455
 ARG SM_GENCODE=75
 ARG USE_CPU=0
+ARG TORCH_CUDA_ARCH_LIST=7.5
+
+ENV TORCH_CUDA_ARCH_LIST=${TORCH_CUDA_ARCH_LIST}
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends build-essential autoconf libtool git \
@@ -93,11 +96,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install CPU version since we don't actually need to run TensorFlow.
 RUN python3 -m pip install tensorflow==1.13.1
 
-RUN pip3 install \
-      torch==1.8.1+cu111 \
-      torchvision==0.9.1+cu111 \
-      torchaudio==0.8.1 \
-      -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html \
+RUN pip3 install torch==1.4.0 torchvision==0.5.0 \
       && python3 -m pip install onnx==1.6.0 \
       && python3 -m pip install pycuda==2019.1.2 \
       && python3 -m pip install Cython==0.29.10 \

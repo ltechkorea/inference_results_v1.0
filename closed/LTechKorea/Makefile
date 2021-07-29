@@ -32,6 +32,7 @@ USE_CPU ?= 0
 SUBMITTER ?= LTechKorea
 
 NVIDIA_VISIBLE_DEVICES ?= 0,1,2,3,4,5,6,7
+TORCH_CUDA_ARCH_LIST ?= 7.0
 
 # Conditional Docker flags
 ifndef DOCKER_DETACH
@@ -336,7 +337,7 @@ endif
 		--build-arg DRIVER_VER_MAJOR=$(DRIVER_VER_MAJOR) \
 		--build-arg SM_GENCODE=$(SM_GENCODE) \
 		--build-arg USE_CPU=$(USE_CPU) \
-		--build-arg TORCH_CUDA_ARCH_LIST=${SM_GENCODE} \
+		--build-arg TORCH_CUDA_ARCH_LIST=${TORCH_CUDA_ARCH_LIST} \
 		--network host - < docker/Dockerfile
 ifeq ($(NO_BUILD), 0)
 	DOCKER_BUILDKIT=$(DOCKER_BUILDKIT) docker build -t mlperf-inference:$(DOCKER_TAG)-latest --no-cache --network host \
