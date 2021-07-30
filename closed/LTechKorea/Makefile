@@ -30,6 +30,7 @@ HOSTNAME_SHORT := $(firstword $(subst ., , $(HOSTNAME)))
 
 USE_CPU ?= 0
 SUBMITTER ?= LTechKorea
+SINGLE_GPU_NO=
 
 NVIDIA_VISIBLE_DEVICES ?= 0,1,2,3,4,5,6,7
 TORCH_CUDA_ARCH_LIST ?= 7.0
@@ -191,8 +192,11 @@ ifneq ($(wildcard /usr/bin/nvidia-docker),)
     # Related issue: https://github.com/kubernetes-sigs/kubespray/issues/6160
     export DOCKER_API_VERSION=1.40
 else
-    DOCKER_RUN_CMD := docker run --gpus=all
-    #DOCKER_RUN_CMD := docker run --gpus "device=7"
+	ifeq ($(SINGLE_GPU_NO),)
+		DOCKER_RUN_CMD := docker run --gpus=all
+	else	#	($(SINGLE_GPU_NO),)
+		DOCKER_RUN_CMD := docker run --gpus "device=$(SINGLE_GPU_NO)"
+	endif	#	($(SINGLE_GPU_NO),)
 endif
 endif
 

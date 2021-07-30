@@ -98,6 +98,13 @@ def find_valid_runs(input_list, scenario):
 
         is_valid = ("result_validity" in result) and (result["result_validity"] == "VALID")
         satisfies_query_constraint = (scenario_key in result) and (float(result[scenario_key]) >= QUERY_METRIC_CONSTRAINTS[scenario][1])
+
+        # NOTE: No check `QUERY_METRIC_CONSTRAINTS`
+        # by jay 2021-07-30 09:46:18
+        if False :
+            print(">>>> No Check QUERY_METRIC_CONSTRAINTS({:})".format(QUERY_METRIC_CONSTRAINTS[scenario][1]))
+            satisfies_query_constraint = (scenario_key in result)
+
         if is_valid and satisfies_query_constraint:
             perf_list.append(input_file)
             if "power" in log_dir:
