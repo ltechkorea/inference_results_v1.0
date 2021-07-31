@@ -59,9 +59,18 @@ SHA1_FILE_NAME=${RESULT_TOP_DIR}/mlperf_submission_${SUBMITTER}.sha1
 echo "Changing directory to ${RESULT_TOP_DIR}"
 cd ${RESULT_TOP_DIR} || exit 1
 
+SUBMITTER=LTechKorea
+
+TARBALL_NAME=${RESULT_TOP_DIR}/mlperf_submission_${SUBMITTER}.tar.gz
+SHA1_FILE_NAME=${RESULT_TOP_DIR}/mlperf_submission_${SUBMITTER}.sha1
+
+echo "Changing directory to ${RESULT_TOP_DIR}"
+cd ${RESULT_TOP_DIR} || exit 1
+
 if [ "$1" = "--pack" ]; then
     echo "Packing tarball and encrypting"
-    tar -czf - ./closed/${SUBMITTER} ./open/${SUBMITTER} | openssl enc -e -aes256 -out ${TARBALL_NAME}
+    tar -czf - --exclude build ./closed/${SUBMITTER} ./open/${SUBMITTER} \
+      | openssl enc -e -aes256 -out ${TARBALL_NAME}
     echo "Generating sha1sum of tarball"
     sha1sum ${TARBALL_NAME} | tee ${SHA1_FILE_NAME}
 elif [ "$1" = "--unpack" ]; then

@@ -71,23 +71,24 @@ Machine = collections.namedtuple("Machine", [
     "system_name_prefix",
 ])
 
-# The A10x8 machine
-COMPUTELAB_402 = Machine(
-    status=Status.PREVIEW,
-    host_processor_model_name="Intel(R) Xeon(R) Platinum 8280 CPU @ 2.70GHz",
+# LTech: The V100Smachine
+LTK_V100S = Machine(
+    status=Status.AVAILABLE,
+    host_processor_model_name="Intel(R) Xeon(R) Gold 6258R CPU @ 2.70GHz",
     host_processors_per_node=2,
-    host_processor_core_count=28,
+    host_processor_core_count=56,
     host_memory_capacity="768 GB",
-    host_storage_capacity="4 TB",
-    host_storage_type="NVMe SSD",
-    accelerator_model_name="NVIDIA A10",
-    accelerator_short_name="A10",
+    host_storage_capacity="8 TB",
+    host_storage_type="SSD",
+    accelerator_model_name="NVIDIA V100S",
+    accelerator_short_name="V100S-PCIE-32GB",
     mig_short_name="",
-    accelerator_memory_capacity="16 GB",
-    accelerator_memory_configuration="GDDR6",
+    accelerator_memory_capacity="32 GB",
+    accelerator_memory_configuration="HBM2",
     hw_notes="",
+    #system_id_prefix="L4210S",
     system_id_prefix="",
-    system_name_prefix="Supermicro 4029GP-TRT-OTO-28",
+    system_name_prefix="LTK L4210S",
 )
 
 # List of Systems
@@ -225,14 +226,10 @@ class System():
 
 submission_systems = [
     # Datacenter submissions
-    System(COMPUTELAB_402, Division.CLOSED, SystemType.DATACENTER, 8, 0, False, False),  # A10x8
-    System(COMPUTELAB_402, Division.CLOSED, SystemType.DATACENTER, 8, 0, True, False),  # A10x8-Triton
+    System(LTK_V100S, Division.CLOSED, SystemType.DATACENTER, 1, 0, False, False),  # V100Sx1
+    System(LTK_V100S, Division.CLOSED, SystemType.DATACENTER, 8, 0, False, False),  # V100Sx8
+
     # Edge submissions
-    System(COMPUTELAB_402, Division.CLOSED, SystemType.EDGE, 1, 0, False, False),  # A10x1
-    System(COMPUTELAB_402, Division.CLOSED, SystemType.EDGE, 1, 0, True, False),  # A10x1-Triton
-    # Open submissions
-    #System(COMPUTELAB_402, Division.OPEN, SystemType.DATACENTER, 1, 0, False, False),  # A10x1
-    #System(COMPUTELAB_402, Division.OPEN, SystemType.DATACENTER, 8, 0, False, False),  # A10x8
 ]
 
 

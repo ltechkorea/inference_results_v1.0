@@ -1,0 +1,21 @@
+[2021-07-31 09:09:24,570 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/3d-unet-99.9/Offline/accuracy/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,571 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/3d-unet-99.9/Offline/performance/run_1/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,571 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/3d-unet-99.9/Offline/performance/run_1/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,578 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/ssd-resnet34/Server/accuracy/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,579 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/ssd-resnet34/Server/performance/run_1/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,580 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/ssd-resnet34/Server/performance/run_1/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,585 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/ssd-resnet34/Offline/accuracy/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,587 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/ssd-resnet34/Offline/performance/run_1/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,587 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/ssd-resnet34/Offline/performance/run_1/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,589 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/3d-unet-99/Offline/accuracy/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,590 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/3d-unet-99/Offline/performance/run_1/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,590 log_parser.py:50 INFO] Sucessfully loaded MLPerf log from closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/3d-unet-99/Offline/performance/run_1/mlperf_log_detail.txt.
+[2021-07-31 09:09:24,590 submission-checker.py:1365 INFO] ---
+[2021-07-31 09:09:24,590 submission-checker.py:1369 INFO] Results closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/3d-unet-99.9/Offline 76.9955
+[2021-07-31 09:09:24,590 submission-checker.py:1369 INFO] Results closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/3d-unet-99/Offline 76.9955
+[2021-07-31 09:09:24,590 submission-checker.py:1369 INFO] Results closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/ssd-resnet34/Offline 908.92
+[2021-07-31 09:09:24,590 submission-checker.py:1369 INFO] Results closed/LTechKorea/results/V100S-PCIE-32GBx8_TRT/ssd-resnet34/Server 799.561
+[2021-07-31 09:09:24,591 submission-checker.py:1371 INFO] ---
+[2021-07-31 09:09:24,591 submission-checker.py:1377 INFO] ---
+[2021-07-31 09:09:24,591 submission-checker.py:1378 INFO] Results=4, NoResults=0
+[2021-07-31 09:09:24,591 submission-checker.py:1383 INFO] SUMMARY: submission looks OK
