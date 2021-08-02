@@ -52,7 +52,8 @@ def preprocess_dlrm(data_dir, model_dir, preprocessed_data_dir):
     )
 
     print("Converting day_0_reordered.npz, day_1_reordered.npz, ... to train_data.bin, test_data.bin, val_data.bin ...")
-    args = Namespace(input_data_prefix=processed_data_file, output_directory=output_dir)
+    #args = Namespace(input_data_prefix=processed_data_file, output_directory=output_dir)
+    args = Namespace(input_data_prefix=raw_data_file, output_directory=output_dir)
     _preprocess(args)
 
     print("Converting test_data.bin and val_data.bin to npy files...")
