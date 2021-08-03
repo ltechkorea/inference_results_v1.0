@@ -69,7 +69,7 @@ cd ${RESULT_TOP_DIR} || exit 1
 
 if [ "$1" = "--pack" ]; then
     echo "Packing tarball and encrypting"
-    tar -czf - --exclude build ./closed/${SUBMITTER} ./open/${SUBMITTER} \
+    tar -czf - --exclude build --exclude artifacts ./closed/${SUBMITTER} ./open/${SUBMITTER} \
       | openssl enc -e -aes256 -out ${TARBALL_NAME}
     echo "Generating sha1sum of tarball"
     sha1sum ${TARBALL_NAME} | tee ${SHA1_FILE_NAME}
