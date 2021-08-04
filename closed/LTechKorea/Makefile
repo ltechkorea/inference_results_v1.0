@@ -31,6 +31,7 @@ HOSTNAME_SHORT := $(firstword $(subst ., , $(HOSTNAME)))
 USE_CPU ?= 0
 SUBMITTER ?= LTechKorea
 SINGLE_GPU_NO=
+MAKE_VERBOSE=0
 
 NVIDIA_VISIBLE_DEVICES ?= 0,1,2,3,4,5,6,7
 TORCH_CUDA_ARCH_LIST ?= 7.0
@@ -424,21 +425,6 @@ build: clone_loadgen clone_power_dev clone_triton link_dirs
 	@$(MAKE) -f $(MAKEFILE_NAME) build_harness
 
 # Clone LoadGen repo.
-.PHONY: clone_loadgen-0
-clone_loadgen-0:
-	@if [ ! -d $(LOADGEN_INCLUDE_DIR) ]; then \
-		echo "Cloning Official MLPerf Inference (For Loadgen Files)" \
-			&& git clone $(INFERENCE_URL) $(INFERENCE_DIR); \
-	fi
-	@echo "Updating Loadgen" \
-		&& cd $(INFERENCE_DIR) \
-		&& git fetch \
-		&& git checkout $(INFERENCE_HASH) \
-		&& git submodule update --init tools/submission/power-dev \
-		&& git submodule update --init third_party/pybind \
-		&& git submodule update --init language/bert/DeepLearningExamples \
-		&& git submodule update --init vision/medical_imaging/3d-unet/nnUnet
-
 .PHONY: clone_loadgen
 clone_loadgen:
 	@if [ ! -d $(LOADGEN_INCLUDE_DIR) ]; then \
@@ -503,7 +489,7 @@ ifeq ($(ARCH), x86_64)
 			-DTRITON_ENABLE_STATS=OFF \
 			-DTRITON_ENABLE_NVTX=OFF \
 			../build \
-		&& make -j server
+		&& make -j VERBOSE=$(MAKE_VERBOSE) server
 endif
 
 # Build TensorRT plugins.
@@ -512,33 +498,33 @@ build_plugins:
 	mkdir -p build/plugins/NMSOptPlugin
 	cd build/plugins/NMSOptPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/NMSOptPlugin \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 ifeq ($(ARCH), x86_64)
 	mkdir -p build/plugins/DLRMInteractionsPlugin
 	cd build/plugins/DLRMInteractionsPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/DLRMInteractionsPlugin \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 	mkdir -p build/plugins/DLRMBottomMLPPlugin
 	cd build/plugins/DLRMBottomMLPPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/DLRMBottomMLPPlugin \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 endif
 	mkdir -p build/plugins/RNNTOptPlugin
 	cd build/plugins/RNNTOptPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/RNNTOptPlugin \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 	mkdir -p build/plugins/instanceNormalization3DPlugin
 	cd build/plugins/instanceNormalization3DPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/instanceNormalization3DPlugin \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 	mkdir -p build/plugins/pixelShuffle3DPlugin
 	cd build/plugins/pixelShuffle3DPlugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/pixelShuffle3DPlugin \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 	mkdir -p build/plugins/conv3D1X1X1K4Plugin
 	cd build/plugins/conv3D1X1X1K4Plugin \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(PROJECT_ROOT)/code/plugin/conv3D1X1X1K4Plugin \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 
 # Build LoadGen.
 .PHONY: build_loadgen
@@ -549,7 +535,7 @@ build_loadgen:
 	fi
 	@cd $(LOADGEN_LIB_DIR) \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) .. \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 	@if [ ! -e $(LOADGEN_LIB_DIR)/mlperf_loadgen.cpython-36m-$(ARCH)-linux-gnu.so ]; then \
 		cd $(LOADGEN_INCLUDE_DIR) \
 			&& CFLAGS="-std=c++14 -O3" python3 setup.py bdist_wheel \
@@ -563,7 +549,7 @@ build_harness:
 	@mkdir -p build/harness \
 		&& cd build/harness \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DLOADGEN_INCLUDE_DIR=$(LOADGEN_INCLUDE_DIR) -DLOADGEN_LIB_DIR=$(LOADGEN_LIB_DIR) $(PROJECT_ROOT)/code/harness \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 	@echo "Finished building harness."
 
 # Compile scripts
@@ -620,7 +606,7 @@ ifeq ($(ARCH), x86_64)
 			-DTRITON_ENABLE_STATS=ON \
 			-DTRITON_ENABLE_NVTX=OFF \
 			../build \
-		&& make -j server
+		&& make -j VERBOSE=$(MAKE_VERBOSE) server
 endif
 
 # Build Triton-CPU harness source codes.
@@ -630,7 +616,7 @@ build_harness_cpu:
 	@mkdir -p build/harness \
 		&& cd build/harness \
 		&& cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DLOADGEN_INCLUDE_DIR=$(LOADGEN_INCLUDE_DIR) -DLOADGEN_LIB_DIR=$(LOADGEN_LIB_DIR) -DUSE_CPU=$(USE_CPU) $(PROJECT_ROOT)/code/harness \
-		&& make -j
+		&& make -j VERBOSE=$(MAKE_VERBOSE)
 	@echo "Finished building Triton-CPU harness."
 
 ###############################  RUN  ###############################

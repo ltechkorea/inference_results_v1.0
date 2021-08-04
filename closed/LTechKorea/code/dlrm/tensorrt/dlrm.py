@@ -106,7 +106,11 @@ class DLRMBuilder(BenchmarkBuilder):
             force_calibration = dict_get(self.args, "force_calibration", default=False)
             cache_file = dict_get(self.args, "cache_file", default="code/dlrm/tensorrt/calibrator.cache")
             preprocessed_data_dir = dict_get(self.args, "preprocessed_data_dir", default="build/preprocessed_data")
-            calib_data_dir = os.path.join(preprocessed_data_dir, "criteo/full_recalib/val_data_128000")
+            # NOTE: calib directory set fro `process_dlrm_data()
+            # dest_dir: `dest_dir + "build/criteo"`
+            # by jay.huh 2021-08-04 22:47:24
+            #calib_data_dir = os.path.join(preprocessed_data_dir, "criteo/full_recalib/val_data_128000")
+            calib_data_dir = os.path.join(preprocessed_data_dir, "criteo/full_recalib/val_data_128000/build/criteo")
 
             # Set up calibrator
             self.calibrator = DLRMCalibrator(calib_batch_size=calib_batch_size, calib_max_batches=calib_max_batches,
