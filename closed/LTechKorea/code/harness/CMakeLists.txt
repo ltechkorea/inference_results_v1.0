@@ -32,14 +32,14 @@ execute_process(COMMAND echo "Warning: setting -Wno-deprecated-declarations to a
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 
 # Set sm versions
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_70,code=sm_70")
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_72,code=sm_72")
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_75,code=sm_75")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_70,code=sm_70")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_72,code=sm_72")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_75,code=sm_75")
 if(${CUDA_VERSION} VERSION_GREATER_EQUAL 11.0)
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_80,code=sm_80")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_80,code=sm_80")
 endif()
 if(${CUDA_VERSION} VERSION_GREATER_EQUAL 11.1)
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_86,code=sm_86")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_86,code=sm_86")
 endif()
 
 project(harness LANGUAGES CXX CUDA)
@@ -178,6 +178,7 @@ else()
             ${LWIS_INCLUDE_DIR}
             common
     )
+    set_property(TARGET harness_default PROPERTY CUDA_ARCHITECTURES 70 72 75 80)
 
     ######### TRITON HARNESS ########
     #
@@ -369,7 +370,7 @@ else()
     )
 
     if (${ARCH} MATCHES "aarch64")
-        target_compile_options(harness_rnnt PRIVATE $<$<COMPILE_LANGUAGE:CUDA>: -gencode arch=compute_72,code=sm_72>
+        target_compile_options(harness_rnnt PRIVATE $<$<COMPILE_LANGUAGE:CUDA>: -gencode=arch=compute_72,code=sm_72>
     )
     endif()
 
@@ -394,6 +395,7 @@ else()
             common
             harness_rnnt
     )
+    set_property(TARGET harness_rnnt PROPERTY CUDA_ARCHITECTURES 70 72 75 80)
 
 
     ######### BERT HARNESS ########
@@ -422,6 +424,7 @@ else()
             common
             harness_bert
     )
+    set_property(TARGET harness_bert PROPERTY CUDA_ARCHITECTURES 70 72 75 80)
 
     ######### DLRM HARNESS ########
     if (NOT ${ARCH} MATCHES "aarch64")
@@ -453,6 +456,7 @@ else()
                 common
                 harness_dlrm
         )
+        set_property(TARGET harness_dlrm PROPERTY CUDA_ARCHITECTURES 70 72 75 80)
     else()
         execute_process(COMMAND echo "Skipping DLRM harness for ${ARCH}")
     endif()

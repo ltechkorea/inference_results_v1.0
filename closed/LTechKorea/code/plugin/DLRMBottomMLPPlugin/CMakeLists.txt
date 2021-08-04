@@ -79,14 +79,14 @@ add_library(dlrmbottommlpplugin MODULE
 target_compile_features(dlrmbottommlpplugin PUBLIC cxx_std_11)
 
 # Set sm versions
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_70,code=sm_70")
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_72,code=sm_72")
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_75,code=sm_75")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_70,code=sm_70")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_72,code=sm_72")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_75,code=sm_75")
 if(${CUDA_VERSION} VERSION_GREATER_EQUAL 11.0)
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_80,code=sm_80")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_80,code=sm_80")
 endif()
 if(${CUDA_VERSION} VERSION_GREATER_EQUAL 11.1)
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_86,code=sm_86")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_86,code=sm_86")
 endif()
 
 # Link TensorRT's nvinfer lib
@@ -94,3 +94,5 @@ target_link_libraries(dlrmbottommlpplugin PUBLIC ${NVINFER_LIB})
 target_link_libraries(dlrmbottommlpplugin PUBLIC ${CUDNN_LIB})
 target_link_libraries(dlrmbottommlpplugin PUBLIC cuda)
 target_link_libraries(dlrmbottommlpplugin PUBLIC cudart)
+
+set_property(TARGET dlrmbottommlpplugin PROPERTY CUDA_ARCHITECTURES 70 72 75 80)

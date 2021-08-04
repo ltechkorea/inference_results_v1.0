@@ -80,14 +80,14 @@ add_library(instancenorm3dplugin MODULE
 target_compile_features(instancenorm3dplugin PUBLIC cxx_std_14)
 
 # Set sm versions
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_70,code=sm_70")
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_72,code=sm_72")
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_75,code=sm_75")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_70,code=sm_70")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_72,code=sm_72")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_75,code=sm_75")
 if(${CUDA_VERSION} GREATER_EQUAL 11.0)
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_80,code=sm_80")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_80,code=sm_80")
 endif()
 if(${CUDA_VERSION} GREATER_EQUAL 11.1)
-string(APPEND CMAKE_CUDA_FLAGS " -gencode arch=compute_86,code=sm_86")
+string(APPEND CMAKE_CUDA_FLAGS " -gencode=arch=compute_86,code=sm_86")
 endif()
 
 # Link TensorRT's nvinfer lib
@@ -100,3 +100,4 @@ target_link_libraries(instancenorm3dplugin PUBLIC ${CUDNN_LIB})
 set_target_properties(instancenorm3dplugin PROPERTIES
   CUDA_SEPARABLE_COMPILATION OFF
 )
+set_property(TARGET instancenorm3dplugin PROPERTY CUDA_ARCHITECTURES 70 72 75 80)
