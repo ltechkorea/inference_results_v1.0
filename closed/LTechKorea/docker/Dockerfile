@@ -96,7 +96,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install CPU version since we don't actually need to run TensorFlow.
 RUN python3 -m pip install tensorflow==1.13.1
 
-RUN pip3 install torch==1.4.0 torchvision==0.5.0 \
+RUN pip3 install torch==1.7.1+cu110  torchvision==0.8.2+cu110 \
+      torchaudio==0.7.2 \
+      -f https://download.pytorch.org/whl/torch_stable.html \
       && python3 -m pip install onnx==1.6.0 \
       && python3 -m pip install pycuda==2019.1.2 \
       && python3 -m pip install Cython==0.29.10 \
