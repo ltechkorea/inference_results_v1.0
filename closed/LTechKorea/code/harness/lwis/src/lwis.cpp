@@ -600,6 +600,7 @@ namespace lwis {
     auto sampleLibrary = m_SampleLibraries[GetNumaIdx(deviceId)];
 
     if (sampleLibrary) {
+#if 0 //  smapleSize not used. by jay 2021-08-04 17:55:27
       // test sample size vs buffer size derived from engine
       for (size_t i = 0; i < num_inputs; i++) {
         size_t sampleSize = volume(engine->getBindingDimensions(i), engine->getBindingFormat(i), engine->hasImplicitBatchDimension())
@@ -608,6 +609,7 @@ namespace lwis {
                                                               << ") does not match engine input size ("
                                                               << sampleSize << ")";
       }
+#endif
 
       // detect contiguous samples
       TIMER_START(contiguity_detection);

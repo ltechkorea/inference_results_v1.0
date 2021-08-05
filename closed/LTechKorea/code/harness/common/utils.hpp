@@ -187,6 +187,8 @@ inline GpuToNumaMap getGpuToNumaMap(const NumaConfig& config)
 inline void bindNumaMemPolicy(const int32_t numaIdx, const int32_t nbNumas)
 {
     unsigned long nodeMask = 1UL << numaIdx;
+    LOG(INFO) << "numaIdx: " << numaIdx << " nbNumas: " << nbNumas
+              << " mask: " << nodeMask;
     long ret = set_mempolicy(MPOL_BIND, &nodeMask, nbNumas + 1);
     CHECK(ret >= 0) << strerror(errno);
 }

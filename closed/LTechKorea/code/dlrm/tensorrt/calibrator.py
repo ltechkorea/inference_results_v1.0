@@ -26,6 +26,7 @@ class DLRMCalibrator(trt.IInt8EntropyCalibrator2):
     def __init__(self, calib_batch_size=512, calib_max_batches=500, force_calibration=False,
                  cache_file="code/dlrm/tensorrt/calibrator.cache",
                  data_dir="build/preprocessed_data/criteo/full_recalib/val_data_128000"):
+
         # Whenever you specify a custom constructor for a TensorRT class,
         # you MUST call the constructor of the parent explicitly.
         trt.IInt8EntropyCalibrator2.__init__(self)
@@ -35,6 +36,9 @@ class DLRMCalibrator(trt.IInt8EntropyCalibrator2):
         self.force_calibration = force_calibration
         self.current_idx = 0
         self.cache_file = cache_file
+        self.data_dir = data_dir
+
+        print("data_dir: {:}".format(data_dir))
 
         num_samples = calib_batch_size * calib_max_batches
         numeric_path = os.path.join(data_dir, "numeric_fp32.npy")

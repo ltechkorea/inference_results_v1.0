@@ -113,8 +113,14 @@ class DLRMBuilder(BenchmarkBuilder):
             calib_data_dir = os.path.join(preprocessed_data_dir, "criteo/full_recalib/val_data_128000/build/criteo")
 
             # Set up calibrator
-            self.calibrator = DLRMCalibrator(calib_batch_size=calib_batch_size, calib_max_batches=calib_max_batches,
-                                             force_calibration=force_calibration, cache_file=cache_file, data_dir=calib_data_dir)
+            #self.calibrator = DLRMCalibrator(calib_batch_size=calib_batch_size, calib_max_batches=calib_max_batches,
+            #                                 force_calibration=force_calibration, cache_file=cache_file, data_dir=calib_data_dir)
+            self.calibrator = DLRMCalibrator( \
+                    calib_batch_size = calib_batch_size, \
+                    calib_max_batches = calib_max_batches, \
+                    force_calibration = force_calibration, \
+                    cache_file = cache_file, \
+                    data_dir = calib_data_dir)
             self.builder_config.int8_calibrator = self.calibrator
             self.cache_file = cache_file
             self.need_calibration = force_calibration or not os.path.exists(cache_file)
