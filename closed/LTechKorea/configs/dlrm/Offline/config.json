@@ -91,7 +91,7 @@
             "V100S-PCIE-32GBx1"
         ],
         "gpu_offline_expected_qps": 2160000,
-        "numa_config": "3:0-15&2:16-31&1:32-47&0:48-63&7:64-79&6:80-95&5:96-111&4:112-127"
+        "numa_config": "0:0-3&1:4-7"
     },
 
 
@@ -619,12 +619,12 @@
         "gpu_copy_streams": 1,
         "gpu_inference_streams": 1,
         "gpu_num_bundles": 2,
-        "input_dtype": "int8",
-        "input_format": "chw4",
+        "input_dtype": "fp16",
+        "input_format": "linear",
         "output_padding_granularity": 128,
-        "precision": "int8",
+        "precision": "fp16",
         "sample_partition_path": "${PREPROCESSED_DATA_DIR}/criteo/full_recalib/sample_partition.npy",
-        "tensor_path": "${PREPROCESSED_DATA_DIR}/criteo/full_recalib/numeric_int8_chw4.npy,${PREPROCESSED_DATA_DIR}/criteo/full_recalib/categorical_int32.npy",
+        "tensor_path": "${PREPROCESSED_DATA_DIR}/criteo/full_recalib/build/criteo/numeric_fp16.npy,${PREPROCESSED_DATA_DIR}/criteo/full_recalib/build/criteo/categorical_int32.npy",
         "use_graphs": false,
         "use_small_tile_gemm_plugin": false
     },
