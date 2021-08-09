@@ -4,7 +4,7 @@ MLPerf Results Summary
 SUT name : LWIS_Server
 Scenario : Offline
 Mode     : PerformanceOnly
-Samples per second: 110.642
+Samples per second: 113.026
 Result is : INVALID
   Min duration satisfied : NO
   Min queries satisfied : Yes
@@ -14,15 +14,15 @@ Recommendations:
 ================================================
 Additional Stats
 ================================================
-Min latency (ns)                : 578444212
-Max latency (ns)                : 578444212
-Mean latency (ns)               : 578444212
-50.00 percentile latency (ns)   : 578444212
-90.00 percentile latency (ns)   : 578444212
-95.00 percentile latency (ns)   : 578444212
-97.00 percentile latency (ns)   : 578444212
-99.00 percentile latency (ns)   : 578444212
-99.90 percentile latency (ns)   : 578444212
+Min latency (ns)                : 566243679
+Max latency (ns)                : 566243679
+Mean latency (ns)               : 566243679
+50.00 percentile latency (ns)   : 566243679
+90.00 percentile latency (ns)   : 566243679
+95.00 percentile latency (ns)   : 566243679
+97.00 percentile latency (ns)   : 566243679
+99.00 percentile latency (ns)   : 566243679
+99.90 percentile latency (ns)   : 566243679
 
 ================================================
 Test Parameters Used
