@@ -6,10 +6,11 @@ Scenario : Server
 Mode     : PerformanceOnly
 Scheduled samples per second : 838.60
 Result is : INVALID
-  Performance constraints satisfied : Yes
+  Performance constraints satisfied : NO
   Min duration satisfied : NO
   Min queries satisfied : NO
 Recommendations:
+ * Reduce target QPS to improve latency.
  * Increase the target QPS so the loadgen pre-generates more queries.
  * The test exited early, before enough queries were issued.
    See the detailed log for why this may have occurred.
@@ -17,17 +18,17 @@ Recommendations:
 ================================================
 Additional Stats
 ================================================
-Completed samples per second    : 444.86
+Completed samples per second    : 439.27
 
-Min latency (ns)                : 55894387
-Max latency (ns)                : 90849721
-Mean latency (ns)               : 71256901
-50.00 percentile latency (ns)   : 69880481
-90.00 percentile latency (ns)   : 81678124
-95.00 percentile latency (ns)   : 85548989
-97.00 percentile latency (ns)   : 88314474
-99.00 percentile latency (ns)   : 90849721
-99.90 percentile latency (ns)   : 90849721
+Min latency (ns)                : 63577611
+Max latency (ns)                : 128787978
+Mean latency (ns)               : 83091803
+50.00 percentile latency (ns)   : 72276093
+90.00 percentile latency (ns)   : 120403669
+95.00 percentile latency (ns)   : 123336429
+97.00 percentile latency (ns)   : 127409279
+99.00 percentile latency (ns)   : 128787978
+99.90 percentile latency (ns)   : 128787978
 
 ================================================
 Test Parameters Used

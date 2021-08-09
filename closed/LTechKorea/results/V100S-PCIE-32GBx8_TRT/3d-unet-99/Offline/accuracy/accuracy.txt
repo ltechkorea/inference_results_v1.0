@@ -213,4 +213,4 @@ WARNING! Some files in folder_gt were not predicted (not present in folder_predi
 Loading evaluation summary...
 Accuracy: mean = 0.85297, whole tumor = 0.9140, tumor core = 0.8680, enhancing tumor = 0.7769
 Done!
-hash=50d023a413ca5134b5911b1f89f4f14496df5b968deeb28469032bf98a11c4f5
+hash=340ec072d97ef9f5a0011d3ca97799fda9cb440aa288a01047846d7853e3f36c
